@@ -19,31 +19,40 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Vector3 mousePosition = Input.mousePosition;
+        mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
+        Vector2 mouseDirection = new Vector2(mousePosition.x-transform.position.x,mousePosition.y - transform.position.y);
+
+        rb.transform.up = mouseDirection;
+
+
         if (Input.GetKey(KeyCode.W))
         {
-            rb.rotation = 0.0f;
+            //rb.rotation = 0.0f;
             rb.position = new Vector2(rb.position.x, rb.position.y + (moveVal * Time.deltaTime));
         }
         if (Input.GetKey(KeyCode.A))
         {
-            rb.rotation = 90.0f;
+            //rb.rotation = 90.0f;
             rb.position = new Vector2(rb.position.x - (moveVal * Time.deltaTime), rb.position.y );
         }
         if (Input.GetKey(KeyCode.S))
         {
-            rb.rotation = 180.0f;
+            //rb.rotation = 180.0f;
             rb.position = new Vector2(rb.position.x, rb.position.y - (moveVal * Time.deltaTime));
         }
         if (Input.GetKey(KeyCode.D))
         {
-            rb.rotation = 270.0f;
+            //rb.rotation = 270.0f;
             rb.position = new Vector2(rb.position.x + (moveVal * Time.deltaTime), rb.position.y);
         }
+
         if (timeBtwShots <= 0.0f)
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                Instantiate(projectile, projectileSpawn.position, transform.rotation);
+                Instantiate(projectile, transform.position, transform.rotation);
+                    
                 timeBtwShots = startTimeBtwShots;
             }
         }
