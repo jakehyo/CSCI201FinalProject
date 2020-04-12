@@ -6,34 +6,46 @@ public class BackgroundScript : MonoBehaviour
 {
     private Vector3 bgPosition;
     private Vector3 bgVelocity;
-    private bool moveLeft;
-    private bool moveDown;
-    private Vector3 bgEdges;
+    private double x_max;
+    private double x_min;
+    private double y_max;
+    private double y_min;
 
     // Start is called before the first frame update
     void Start()
     {
         bgPosition = new Vector3(0.0f, 0.0f, 0.0f);
-        bgVelocity = new Vector3(0.5f, 0.5f, 0.0f);
-        bgEdges = new Vector3(250f, 200f, 0.0f);
-        moveLeft = true;
-        moveDown = true;
-        
+        bgVelocity = new Vector3(0.01f, 0.01f, 0.01f);
+        x_max = 1.6f;
+        x_min = -1.6f;
+        y_max = 3.5f;
+        y_min = -3.5f;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (bgPosition.x == bgEdges.x)
+        if (bgPosition.x < x_min)
         {
-            bgVelocity.x = -bgVelocity.x;
+            bgVelocity.x = 0.01f;
+        }
+        else if (bgPosition.x > x_max)
+        {
+            bgVelocity.x = -0.01f;
         }
 
-        if (bgPosition.y == bgEdges.y)
+        if (bgPosition.y < y_min)
         {
-            bgVelocity.y = -bgVelocity.y;
+            bgVelocity.y = 0.01f;
+        }
+        else if (bgPosition.y > y_max)
+        {
+            bgVelocity.y = -0.01f;
         }
 
-        transform.position = bgPosition + bgVelocity;
+        bgPosition.x += bgVelocity.x;
+        bgPosition.y += bgVelocity.y;
+
+        transform.position = bgPosition;
     }
 }
