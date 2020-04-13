@@ -10,6 +10,8 @@ public class PlayerScript : MonoBehaviour
     public Transform projectileSpawn;
     private float timeBtwShots;
     public float startTimeBtwShots;
+    public int health;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,22 +21,53 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.W))
+        if (health <= 0)
         {
+            //Debug.Log("DESTRUCTION");
+            //trigger Game Over
+            Destroy(gameObject);
+        }
+        if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.A))
+        {
+           
+            rb.rotation = 45.0f;
+            rb.position = new Vector2(rb.position.x - (moveVal * Time.deltaTime), rb.position.y + (moveVal * Time.deltaTime));
+            Debug.Log("Position.X: " + rb.position.x);
+            Debug.Log("Position.Y: " + rb.position.y);
+
+        }
+        else if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D))
+        {
+            rb.rotation = 315.0f;
+            rb.position = new Vector2(rb.position.x + (moveVal * Time.deltaTime), rb.position.y + (moveVal * Time.deltaTime));
+        }
+        else if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.A))
+        {
+            rb.rotation = 135.0f;
+            rb.position = new Vector2(rb.position.x - (moveVal * Time.deltaTime), rb.position.y - (moveVal * Time.deltaTime));
+        }
+        else if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D))
+        {
+            rb.rotation = 225.0f;
+            rb.position = new Vector2(rb.position.x + (moveVal * Time.deltaTime), rb.position.y - (moveVal * Time.deltaTime));
+        }
+        else if (Input.GetKey(KeyCode.W) && !(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)))
+        {
+            
             rb.rotation = 0.0f;
             rb.position = new Vector2(rb.position.x, rb.position.y + (moveVal * Time.deltaTime));
         }
-        if (Input.GetKey(KeyCode.A))
+        else if (Input.GetKey(KeyCode.A) && !(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S)))
         {
             rb.rotation = 90.0f;
             rb.position = new Vector2(rb.position.x - (moveVal * Time.deltaTime), rb.position.y );
         }
-        if (Input.GetKey(KeyCode.S))
+        else if (Input.GetKey(KeyCode.S) && !(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)))
         {
             rb.rotation = 180.0f;
             rb.position = new Vector2(rb.position.x, rb.position.y - (moveVal * Time.deltaTime));
         }
-        if (Input.GetKey(KeyCode.D))
+        else if (Input.GetKey(KeyCode.D) && !(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S)))
         {
             rb.rotation = 270.0f;
             rb.position = new Vector2(rb.position.x + (moveVal * Time.deltaTime), rb.position.y);
@@ -52,5 +85,11 @@ public class PlayerScript : MonoBehaviour
             timeBtwShots -= Time.deltaTime;
         }
 
+    }
+
+    public void TakeDamage(int damage)
+    {
+        
+        health -= damage;
     }
 }
