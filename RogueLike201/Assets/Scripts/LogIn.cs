@@ -4,7 +4,7 @@ using UnityEngine;
 using Final_Project_Client;
 using TMPro;
 
-public class SignUp : MonoBehaviour
+public class LogIn : MonoBehaviour
 {
     public TMP_InputField userInput;
 
@@ -14,11 +14,12 @@ public class SignUp : MonoBehaviour
 
         if (username != null)
         {
-            //Debug.Log("registered user " + username);
 
             //Client client = new Client(9999);
 
             //client.registerUser(username);
+
+            // Debug.Log("registered user " + username);
         }
     }
 }
