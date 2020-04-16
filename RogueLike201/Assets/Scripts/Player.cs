@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collection.Generic;
+using System.Collections.Generic;
 
 namespace Final_Project_Client
 {

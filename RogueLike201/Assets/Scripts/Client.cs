@@ -13,7 +13,7 @@ namespace Final_Project_Client
     {
         // constructor for the client
         private Player player;
-		public Socket Socket { get => socket; set => socket = value; }
+		public Socket Socket { get => Socket; set => Socket = value; }
 
 		static void Main(string[] args)
         {
@@ -35,7 +35,7 @@ namespace Final_Project_Client
             {
                 client.updateJSON();
             }
-            return 0;
+            return;
         }
 
         public Client(int port)
@@ -43,8 +43,9 @@ namespace Final_Project_Client
             // create network client
             try
             {
-                IPEndPoint localendpoint = new IPEndPoint("localhost", port);
-                this.Socket = new Socket(ipAddr.AddressFamily,
+                IPAddress ipAddress = Dns.Resolve("localhost").AddressList[0];
+                IPEndPoint localendpoint = new IPEndPoint(ipAddress, port);
+                this.Socket = new Socket(ipAddress.AddressFamily,
                    SocketType.Stream, ProtocolType.Tcp);
 
                 try
@@ -73,11 +74,10 @@ namespace Final_Project_Client
             }
         }
 
-        public void logIn()
+        public void logIn(string username)
         {
             bool validLogIn = false;
-            string username;
-            string password;
+            //string password;
 
             while (true)
             {
@@ -89,8 +89,8 @@ namespace Final_Project_Client
                 byte[] messageSent = Encoding.ASCII.GetBytes(username);
                 int byteSent = Socket.Send(messageSent);
 
-                messageSent = Encoding.ASCII.GetBytes(password);
-                byteSent = Socket.Send(messageSent);
+                // messageSent = Encoding.ASCII.GetBytes(password);
+                // byteSent = Socket.Send(messageSent);
 
                 // read in response from the server
                 byte[] messageReceived = new byte[1024];
@@ -117,7 +117,6 @@ namespace Final_Project_Client
                     // loop
 
                     // if register is chosen
-                    registerUser();
                 }
                 else // incorrect password to the username
 				{
@@ -130,8 +129,9 @@ namespace Final_Project_Client
             }
         }
 
-        public void registerUser()
+        public void registerUser(string username)
         {
+            Console.WriteLine("registered user " + username);
             // reading a new username and password
             // send the two strings to the server
 
