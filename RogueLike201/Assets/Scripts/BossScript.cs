@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyScript : MonoBehaviour
+public class BossScript : MonoBehaviour
 {
     public int health;
     public float speed;
@@ -10,8 +10,11 @@ public class EnemyScript : MonoBehaviour
     public float stoppingDistance;
     public float startTimeBtwShots;
     private float timeBtwShots;
-    private Vector3 targ;
     private Transform player;
+    private Vector3 targ;
+    public Transform rightShot;
+    public Transform leftShot;
+    public Transform centerShot;
     public GameObject shot;
     // Start is called before the first frame update
     void Start()
@@ -31,7 +34,7 @@ public class EnemyScript : MonoBehaviour
 
         if (PlayerScript.alive)
         {
-            Vector3 targ = player.transform.position;
+            targ = player.transform.position;
         }
         targ.z = 0f;
 
@@ -41,7 +44,6 @@ public class EnemyScript : MonoBehaviour
 
         float angle = Mathf.Atan2(targ.y, targ.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 90.0f));
-
         //move
         if (Vector2.Distance(transform.position, player.position) < nearDistance)
         {
@@ -59,7 +61,9 @@ public class EnemyScript : MonoBehaviour
         //shoot
         if (timeBtwShots <= 0)
         {
-            Instantiate(shot, transform.position, Quaternion.identity);
+            Instantiate(shot, centerShot.position, Quaternion.identity);
+            Instantiate(shot, rightShot.position, Quaternion.identity);
+            Instantiate(shot, leftShot.position, Quaternion.identity);
             timeBtwShots = startTimeBtwShots;
         }
         else
@@ -70,7 +74,7 @@ public class EnemyScript : MonoBehaviour
     }
     public void TakeDamage(int damage)
     {
-        
+
         health -= damage;
     }
 }

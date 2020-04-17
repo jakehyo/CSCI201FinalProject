@@ -11,11 +11,13 @@ public class PlayerScript : MonoBehaviour
     private float timeBtwShots;
     public float startTimeBtwShots;
     public int health;
+    public static bool alive;
 
     // Start is called before the first frame update
     void Start()
     {
         timeBtwShots = 0.0f;
+        alive = true;
     }
 
     // Update is called once per frame
@@ -26,6 +28,7 @@ public class PlayerScript : MonoBehaviour
             //Debug.Log("DESTRUCTION");
             //trigger Game Over
             Destroy(gameObject);
+            alive = false;
         }
         if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.A))
         {
