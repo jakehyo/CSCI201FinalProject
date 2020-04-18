@@ -42,6 +42,12 @@ public class PlayerScript : MonoBehaviour
 
     }
 
+    void Awake()
+    {
+        Debug.Log("Awake");
+        DontDestroyOnLoad(gameObject);
+    }
+
     void fireWeapon()
     {
         weaponHolder = transform.GetChild(2).gameObject;
