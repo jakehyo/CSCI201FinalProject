@@ -14,11 +14,9 @@ public class SignUp : MonoBehaviour
 
         if (username != null)
         {
-            //Debug.Log("registered user " + username);
+            Client client = new Client(9999);
 
-            //Client client = new Client(9999);
-
-            //client.registerUser(username);
+            client.registerUser(username);
         }
     }
 }

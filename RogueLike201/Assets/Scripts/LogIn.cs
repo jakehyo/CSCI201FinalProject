@@ -15,11 +15,9 @@ public class LogIn : MonoBehaviour
         if (username != null)
         {
 
-            //Client client = new Client(9999);
+            Client client = new Client(9999);
 
-            //client.registerUser(username);
-
-            // Debug.Log("registered user " + username);
+            client.logIn(username);
         }
     }
 }

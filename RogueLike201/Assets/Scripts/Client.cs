@@ -3,53 +3,64 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using Newtonsoft.Json;
+using UnityEngine;
+
 namespace Final_Project_Client
 {
     public class Client
     {
         // constructor for the client
         public Player player;
-        public Socket socket { get => socket; set => socket = value; }
+        public Socket socket;
+        public NetworkStream netStream;
 
-        [Obsolete]
         public Client(int port)
         {
+            socket = null;
             // create client object
             try
             {
-                Console.WriteLine("connecting to the socket");
+                // Console.WriteLine("connecting to the socket");
+                Debug.Log("connecting to the socket");
 
                 // establish connection to the specified socket
-                IPAddress ipAddress = Dns.Resolve("localhost").AddressList[0];
-                IPEndPoint localendpoint = new IPEndPoint(ipAddress, port);
-                this.socket = new Socket(ipAddress.AddressFamily,
-                   SocketType.Stream, ProtocolType.Tcp);
+                IPHostEntry ipHost = Dns.GetHostEntry(Dns.GetHostName());
+                IPAddress ipAddress = ipHost.AddressList[0];
+                IPEndPoint localEndPoint = new IPEndPoint(ipAddress, port);
+
+                this.socket = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
 
                 try
                 {
-                    // attempt to connect to port 9999
-                    Console.WriteLine("Attempting to connect to port 9999");
-                    this.socket.Connect(localendpoint);
-                    Console.WriteLine("Connected to port " + port);
+                    // attempt to connect to port
+                    // Console.WriteLine("Attempting to connect to port 9999");
+                    Debug.Log("Attempting to connect to port " + port);
+                    this.socket.Connect(localEndPoint);
+                    netStream = new NetworkStream(this.socket);
+                    // Console.WriteLine("Connected to port " + port);
+                    Debug.Log("Connected to port " + port);
 
                 }
                 catch (ArgumentNullException ane)
                 {
-                    Console.WriteLine("ArgumentNullException : {0}", ane.ToString());
+                    // Console.WriteLine("ArgumentNullException : {0}", ane.ToString());
+                    Debug.Log(ane.ToString());
                 }
                 catch (SocketException se)
                 {
-                    Console.WriteLine("SocketException : {0}", se.ToString());
+                    // Console.WriteLine("SocketException : {0}", se.ToString());
+                    Debug.Log(se.ToString());
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine("Unexpected exception : {0}", e.ToString());
+                    // Console.WriteLine("Unexpected exception : {0}", e.ToString());
+                    Debug.Log(e.ToString());
                 }
             }
             catch (Exception e)
             {
-
-                Console.WriteLine(e.ToString());
+                // Console.WriteLine(e.ToString());
+                Debug.Log(e.ToString());
             }
         }
 
@@ -61,7 +72,7 @@ namespace Final_Project_Client
             Console.WriteLine(username);
 
             // send the command 
-            byte[] messageSent = Encoding.ASCII.GetBytes("Login");
+            byte[] messageSent = Encoding.ASCII.GetBytes("Login\n");
             this.socket.Send(messageSent);
 
             // serialize the data to be sent across the socket
@@ -74,10 +85,9 @@ namespace Final_Project_Client
             int byteRecv = this.socket.Receive(messageReceived);
 
             // print response to the Console (for testing purposes)
-            string response = Encoding.ASCII.GetString(messageReceived,
-                                                0, byteRecv);
-            Console.WriteLine("Message from Server -> {0}",
-                    response);
+            string response = Encoding.ASCII.GetString(messageReceived, 0, byteRecv);
+            // Console.WriteLine("Message from Server -> {0}", response);
+            Debug.Log(response);
 
             // found username
             if (response.Contains("Succesfully Found Your Profile"))
@@ -90,6 +100,7 @@ namespace Final_Project_Client
 
                 // assign the object to the player object
                 this.player = JsonConvert.DeserializeObject<Player>(response);
+                Debug.Log("Found the profile");
             }
             // did not find username
             else if (response.Contains("No Username Found"))
@@ -102,12 +113,13 @@ namespace Final_Project_Client
 
         public void registerUser(string username)
         {
-            Console.WriteLine("registering user " + username);
+            // Console.WriteLine("registering user " + username);
+            Debug.Log("registering user " + username);
             this.player = new Player();
             this.player.username = username;
 
             // send command to the server
-            byte[] messageSent = Encoding.ASCII.GetBytes("Register");
+            byte[] messageSent = Encoding.ASCII.GetBytes("Register\n");
             this.socket.Send(messageSent);
 
             // serialize the data to be sent across the socket
@@ -136,6 +148,7 @@ namespace Final_Project_Client
             }
             else if (response.Contains("Username Already Exists"))
             {
+                Debug.Log("Username Already Exists");
                 // MENU SHOULD PROMPT THE USER TO ENTER ANOTHER USERNAME
                 // OR PROCEED TO LOGIN MENU
             }
@@ -143,10 +156,11 @@ namespace Final_Project_Client
 
         public void updateJSON(int prevScore, bool gameFinished, int weaponID, int money)
         {
-            Console.WriteLine("updating user information for user: " + player.username);
+            // Console.WriteLine("updating user information for user: " + player.username);
+            Debug.Log("updating user information for user: " + player.username);
 
             // send command to the server
-            byte[] messageSent = Encoding.ASCII.GetBytes("Update");
+            byte[] messageSent = Encoding.ASCII.GetBytes("Login");
             this.socket.Send(messageSent);
 
             // update high-score if it is the new highest
