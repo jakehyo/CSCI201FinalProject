@@ -1,57 +1,35 @@
 ﻿using System;
-using UnityEngine;
-using UnityEngine.Networking;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
-//using System.Text.Json;
-//using System.Text.Json.Serialization;
-
+using Newtonsoft.Json;
 namespace Final_Project_Client
 {
     public class Client
     {
         // constructor for the client
-        private Player player;
-		public Socket Socket { get => Socket; set => Socket = value; }
+        public Player player;
+        public Socket socket { get => socket; set => socket = value; }
 
-		static void Main(string[] args)
-        {
-            if (args is null)
-            {
-                throw new ArgumentNullException(nameof(args));
-            }
-
-            bool finishedGame = false;
-            Client client = new Client(9999);
-            // if log in option is chosen
-            //client.logIn();
-            // else if the register option is chosen
-            //client.registerUser();
-
-            //client.beginGame();
-
-            if (finishedGame)
-            {
-                client.updateJSON();
-            }
-            return;
-        }
-
+        [Obsolete]
         public Client(int port)
         {
-            // create network client
+            // create client object
             try
             {
+                Console.WriteLine("connecting to the socket");
+
+                // establish connection to the specified socket
                 IPAddress ipAddress = Dns.Resolve("localhost").AddressList[0];
                 IPEndPoint localendpoint = new IPEndPoint(ipAddress, port);
-                this.Socket = new Socket(ipAddress.AddressFamily,
+                this.socket = new Socket(ipAddress.AddressFamily,
                    SocketType.Stream, ProtocolType.Tcp);
 
                 try
                 {
+                    // attempt to connect to port 9999
                     Console.WriteLine("Attempting to connect to port 9999");
-                    this.Socket.Connect(localendpoint);
+                    this.socket.Connect(localendpoint);
                     Console.WriteLine("Connected to port " + port);
 
                 }
@@ -68,94 +46,146 @@ namespace Final_Project_Client
                     Console.WriteLine("Unexpected exception : {0}", e.ToString());
                 }
             }
-            catch (Exception e) { 
-          
-                Console.WriteLine(e.ToString()); 
+            catch (Exception e)
+            {
+
+                Console.WriteLine(e.ToString());
             }
         }
 
         public void logIn(string username)
         {
-            bool validLogIn = false;
-            //string password;
+            // create a new player and assign the text input as the username
+            this.player = new Player();
+            this.player.username = username;
+            Console.WriteLine(username);
 
-            while (true)
+            // send the command 
+            byte[] messageSent = Encoding.ASCII.GetBytes("Login");
+            this.socket.Send(messageSent);
+
+            // serialize the data to be sent across the socket
+            string JSONresult = JsonConvert.SerializeObject(this.player);
+            messageSent = Encoding.ASCII.GetBytes(JSONresult);
+            this.socket.Send(messageSent);
+
+            // read in response from the server
+            byte[] messageReceived = new byte[1024];
+            int byteRecv = this.socket.Receive(messageReceived);
+
+            // print response to the Console (for testing purposes)
+            string response = Encoding.ASCII.GetString(messageReceived,
+                                                0, byteRecv);
+            Console.WriteLine("Message from Server -> {0}",
+                    response);
+
+            // found username
+            if (response.Contains("Succesfully Found Your Profile"))
             {
-                // read in username
-                // username = read in from menu
-                // password = read in from menu
+                // read in JSON string and deserialize the object
+                messageReceived = new byte[1024];
+                byteRecv = this.socket.Receive(messageReceived);
+                response = Encoding.ASCII.GetString(messageReceived,
+                                                0, byteRecv);
 
-                // send two strings of the username and the password
-                byte[] messageSent = Encoding.ASCII.GetBytes(username);
-                int byteSent = Socket.Send(messageSent);
-
-                // messageSent = Encoding.ASCII.GetBytes(password);
-                // byteSent = Socket.Send(messageSent);
-
-                // read in response from the server
-                byte[] messageReceived = new byte[1024];
-
-                int byteRecv = this.Socket.Receive(messageReceived);
-                string response = Encoding.ASCII.GetString(messageReceived,
-                                                 0, byteRecv);
-                Console.WriteLine("Message from Server -> {0}",
-                      Encoding.ASCII.GetString(messageReceived,
-                                                 0, byteRecv));
-
-                if (response.Contains("Succesfully Found Your Profile")) {
-                    // read JSON object back in
-                        // read object for the response to autofill player info
-                    // store the object to the client (in player)
-                    break;
-                }
-                else if (response.Contains("No Username Found")) { // make sure to change 
-                    // print statement: try again or register
-                    // if cancel is chosen
-                    // break;
-
-                    // if try again is chosen
-                    // loop
-
-                    // if register is chosen
-                }
-                else // incorrect password to the username
-				{
-                    // if try again
-                        // loop
-
-                    // if cancel
-                        // break (terminate)
-				}
+                // assign the object to the player object
+                this.player = JsonConvert.DeserializeObject<Player>(response);
+            }
+            // did not find username
+            else if (response.Contains("No Username Found"))
+            {
+                // MENU SHOULD PROMPT THE USER TO ENTER ANOTHER USERNAME
+                // OR SUGGEST REGISTERING AS A NEW USER
+                // OR HAVE THE BACK OPTION
             }
         }
 
         public void registerUser(string username)
         {
-            Console.WriteLine("registered user " + username);
-            // reading a new username and password
-            // send the two strings to the server
+            Console.WriteLine("registering user " + username);
+            this.player = new Player();
+            this.player.username = username;
 
-            // if(valid registration)
-                // read in the new JSON object
-                // assign to the new player 
-            // if(username already exists)
-                // try again
-                // cancel
-                // log in
+            // send command to the server
+            byte[] messageSent = Encoding.ASCII.GetBytes("Register");
+            this.socket.Send(messageSent);
+
+            // serialize the data to be sent across the socket
+            string JSONresult = JsonConvert.SerializeObject(this.player);
+            messageSent = Encoding.ASCII.GetBytes(JSONresult);
+            this.socket.Send(messageSent);
+
+            byte[] messageReceived = new byte[1024];
+            int byteRecv = this.socket.Receive(messageReceived);
+
+            // print response to the Console (for testing purposes)
+            string response = Encoding.ASCII.GetString(messageReceived,
+                                                0, byteRecv);
+
+            if (response.Contains("Valid Registration"))
+            {
+                // read in the new JSON string
+                messageReceived = new byte[1024];
+                byteRecv = this.socket.Receive(messageReceived);
+                response = Encoding.ASCII.GetString(messageReceived,
+                                                0, byteRecv);
+
+                // assign to the new player
+                this.player = JsonConvert.DeserializeObject<Player>(response);
+
+            }
+            else if (response.Contains("Username Already Exists"))
+            {
+                // MENU SHOULD PROMPT THE USER TO ENTER ANOTHER USERNAME
+                // OR PROCEED TO LOGIN MENU
+            }
         }
 
-        public void updateJSON()
-		{
-            // update high-score if it is the new highest
-            // update vector of total scores
-            // update new game plus if necessary
-            // update cosmetics if applicable
-            // update weaponid
-            // update money (does money get reset if you do not win the game)
+        public void updateJSON(int prevScore, bool gameFinished, int weaponID, int money)
+        {
+            Console.WriteLine("updating user information for user: " + player.username);
 
-            // create an object writer
-            // write to the server
-            // flush()
-		}
+            // send command to the server
+            byte[] messageSent = Encoding.ASCII.GetBytes("Update");
+            this.socket.Send(messageSent);
+
+            // update high-score if it is the new highest
+            if (prevScore > this.player.AllhighScore[0])
+            {
+                this.player.highScore = prevScore;
+            }
+            // update list of total scores
+            this.player.AllhighScore.Add(prevScore);
+            // sort the list now
+
+            // update new game plus if necessary
+            if (gameFinished)
+            {
+                this.player.newGamePlus = true;
+
+                // update weaponid
+                this.player.weaponID = weaponID;
+
+                // update money (does money get reset if you do not win the game)
+                this.player.money = money;
+            }
+
+            // update cosmetics if applicable
+            if (gameFinished)
+            {
+                System.Collections.IList list = player.cosmetic;
+                for (int i1 = 0; i1 < list.Count; i1++)
+                {
+                    int i = (int)list[i1];
+                    this.player.cosmetic[i] = true;
+                }
+            }
+
+            // serialize the object and send to the server
+            string JSONresult = JsonConvert.SerializeObject(this.player);
+            messageSent = Encoding.ASCII.GetBytes(JSONresult);
+            this.socket.Send(messageSent);
+
+        }
     }
 }
