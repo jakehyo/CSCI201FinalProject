@@ -6,6 +6,7 @@ public class PlayerScript : MonoBehaviour
 {
     public Rigidbody2D rb;
     public int moveVal;
+    public int coinCount;
     public GameObject crossHair;
     public GameObject weaponHolder;
     private float timeBtwShots;
@@ -46,6 +47,11 @@ public class PlayerScript : MonoBehaviour
     {
         Debug.Log("Awake");
         DontDestroyOnLoad(gameObject);
+    }
+
+    public void addCoin()
+    {
+        coinCount++;
     }
 
     void fireWeapon()

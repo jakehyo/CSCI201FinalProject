@@ -17,7 +17,7 @@ public class WeaponSwitchScript : MonoBehaviour
     {
 
         int previousWeapon = selectedWeapon;
-
+        /**
         if (Input.GetAxis("Mouse ScrollWheel") > 0f)
         {
             if (selectedWeapon >= transform.childCount-1)
@@ -40,7 +40,7 @@ public class WeaponSwitchScript : MonoBehaviour
                 selectedWeapon--;
             }
         }
-
+        **/
         if(selectedWeapon != previousWeapon)
         {
             SelectWeapon();
@@ -61,6 +61,14 @@ public class WeaponSwitchScript : MonoBehaviour
                 weapon.gameObject.SetActive(false);
             }
             i++;
+        }
+    }
+
+    public void setWeapon(int weaponId)
+    {
+        if(weaponId >= 0)
+        {
+            selectedWeapon = weaponId;
         }
     }
 
