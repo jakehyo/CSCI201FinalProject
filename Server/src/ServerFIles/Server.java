@@ -19,13 +19,13 @@ public class Server {
 				e.printStackTrace();
 			}
 		
-		
-		
-		
 	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Server server= new Server(9999);
+		
+		System.out.println("Server is running");
+		
 		while(true) {
 			Socket socket;
 			try {

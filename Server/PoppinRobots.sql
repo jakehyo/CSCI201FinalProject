@@ -16,9 +16,10 @@ CREATE TABLE Player(
     NAME VARCHAR(20) NOT NULL,
     HighScore INT(20) NOT NULL,
     NewGamePlus BOOLEAN NOT NULL,
+    CosmeticID INT(2) AUTO_INCREMENT,
     WeaponID INT(1) NOT NULL,
     Money INT(10) NOT NULL,
-    FOREIGN KEY fk5(PlayerID) REFERENCES Cosmetics(ID)
+    FOREIGN KEY fk5(CosmeticID) REFERENCES Cosmetics(ID)
     );
     INSERT INTO Player (NAME,HighScore, NewGamePlus,WeaponID,Money)
 		values ('Chris', 100000,false, 0, 200),

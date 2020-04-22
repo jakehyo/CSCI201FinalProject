@@ -11,13 +11,13 @@ public class Player {
 @SerializedName("PlayerID")
 @Expose
 private Integer playerID;
-@SerializedName("NAME")
+@SerializedName("username")
 @Expose
-private String nAME;
+private String username;
 @SerializedName("HighScore")
 @Expose
 private Integer highScore;
-@SerializedName("AllHighScoreVect")
+@SerializedName("AllHighScore")
 @Expose
 private List<Integer> AllhighScore;
 @SerializedName("NewGamePlus")
@@ -42,11 +42,11 @@ this.playerID = playerID;
 }
 
 public String getNAME() {
-return nAME;
+return username;
 }
 
 public void setNAME(String nAME) {
-this.nAME = nAME;
+this.username = nAME;
 }
 
 public Integer getHighScore() {

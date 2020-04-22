@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.net.Socket;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -15,17 +16,21 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 public class ServerThread extends Thread{
 
 	Socket socket;
-	ObjectOutputStream os;
-	ObjectInputStream is;
+	// ObjectOutputStream os;
+	// ObjectInputStream is;
+	BufferedReader br;
+	PrintWriter pw;
 	Connection conn = null;
 	Statement st = null;
 	Statement tt = null;
@@ -36,13 +41,14 @@ public class ServerThread extends Thread{
 	Example PlayersData;
 	Player player;
 	int player_id;
-	int cosmetic_id;
 	public ServerThread(Socket s) {
 		try {
 			// to do --> store them somewhere, you will need them later 
-			is = new ObjectInputStream(s.getInputStream());
-			os = new ObjectOutputStream (s.getOutputStream());
-			conn = DriverManager.getConnection("jdbc:mysql://localhost/PoppinRobots?user=root&password=1216&serverTimezone=UTC");
+			//is = new ObjectInputStream(s.getInputStream());
+			br = new BufferedReader(new InputStreamReader(s.getInputStream()));
+			//os = new ObjectOutputStream (s.getOutputStream());
+			pw = new PrintWriter(s.getOutputStream());
+			conn = DriverManager.getConnection("jdbc:mysql://localhost/PoppinRobots?user=root&password=root&serverTimezone=UTC");
 			st = conn.createStatement();
 			
 			// rs = st.executeQuery("SELECT * from Student where fname='" + name + "'");
@@ -71,26 +77,33 @@ public class ServerThread extends Thread{
 	}
 	public void run() {
 		Gson gson = new Gson();
+		StringBuilder sb = new StringBuilder();
+		String line;
 		while (true) {
+			
 			try {
 				
 			//grab the jsonObjects from the finished game mode
 			
-				String command = (String)is.readObject();
-				if (command.contentEquals("Login")){ //read in that we are logging in from client.
-					JsonObject json = (JsonObject) is.readObject();
-					player = gson.fromJson(json, Player.class);
+				String command = br.readLine();
+				// System.out.println(command);
+				
+				if (command.equals("Login")){ //read in that we are logging in from client.
+					line = br.readLine();
+					player = gson.fromJson(line, Player.class);
 					String player_name = player.getNAME();
-					ps = conn.prepareStatement("SELECT g.*, s.* IF(g.NAME = "+ player_name + ",'true','false') AS FLAG, FROM Player g inner join Cosmetics s on g.CosmeticID = s.ID" ); //Select the skin and highscore for the client to use and send over as a jsonObject.
+					//Select the skin and highscore for the client to use and send over as a jsonObject.
+					ps = conn.prepareStatement("SELECT g.*, s.* ,IF(g.NAME =  '" + player_name + "' ,'true','false') "
+							+ "AS FLAG  FROM Player g inner join Cosmetics s on g.PlayerID = s.ID ;");
 					rs = ps.executeQuery();
+					System.out.println("Passed SQL Query");
 					boolean found_player = false;
-					List<Integer> high_scores = null;
-					List<Boolean> Cosmetics = null;
+					List<Integer> high_scores = new ArrayList<Integer>();
+					List<Boolean> Cosmetics = new ArrayList<Boolean>();
 					while(rs.next()) {
 						boolean flag = rs.getBoolean("FLAG");
 						int hs = rs.getInt("HighScore");
 						if(flag) {
-							cosmetic_id = rs.getInt("CosmeticID");
 							player.setHighScore(hs);
 							player.setMoney(rs.getInt("Money"));
 							player.setPlayerID(rs.getInt("PlayerID"));
@@ -108,37 +121,65 @@ public class ServerThread extends Thread{
 					player.setAllHighScore(high_scores);
 					String response;
 					if ( found_player) {
-						response = "Successfully Found Your Profile!";
-						os.writeObject(response);
-						os.flush();
+						response = "Found";
+						pw.print(response);
+						pw.flush();
+						System.out.println(response);
 						response = gson.toJson(player,Player.class);
-						os.writeObject(response);
-						os.flush();
+						pw.print(response);
+						pw.flush();
+						System.out.println(response);
 					}
 					else {
-						response = "No Player ID Found. Please Try Again";
-						os.writeObject(response);
-						os.flush();
+						response = "Absent";
+						pw.print(response);
+						pw.flush();
 					}
+					break;
 				}
-				if ( command.contentEquals("Create New")) {
-					JsonObject json = (JsonObject) is.readObject();
-					player = gson.fromJson(json, Player.class);
-//					player_id = player.getPlayerID();
+				if (command.equals("Register")) {
+					line = br.readLine();
+					player = gson.fromJson(line, Player.class);
 					String NAME = player.getNAME();
-					ps = conn.prepareStatement("INSERT INTO Cosmetics ( GoldFit, RedFit,BlueFit,BlackFit) values (0,0,0,0);" );
+					ps = conn.prepareStatement("SELECT * FROM Player WHERE NAME = '" + NAME + "'");
 					rs = ps.executeQuery();
-					ps = conn.prepareStatement("INSERT INTO Player (NAME,HighScore, NewGamePlus,WeaponID,Money) values ( "+ NAME+", 0,false,0, 0);");
-					rs = ps.executeQuery();
-					String response = "Created New Player!";
-					os.writeObject(response);
-					os.flush();
-				
+					String response = "";
+					if (rs != null) {
+						response = "Taken\n";
+					}
+					else {
+						System.out.println("Registering user: " + NAME);
+						ps = conn.prepareStatement("INSERT INTO Cosmetics ( GoldFit, RedFit,BlueFit,BlackFit) values (0,0,0,0);" );
+						ps.executeUpdate();
+						ps = conn.prepareStatement("INSERT INTO Player (NAME,HighScore, NewGamePlus,WeaponID,Money) values ('" + NAME + "', 0,false,0, 0);");
+						ps.executeUpdate();
+						response = "Valid\n";
+					}
+					pw.print(response);
+					pw.flush();
+					break;
 				}
-				if ( command.contentEquals("Mission Completed")) {
-					JsonObject json = (JsonObject) is.readObject();
-					player = gson.fromJson(json, Player.class);
-					player_id = player.getPlayerID();
+				if ( command.contentEquals("HighScores")) {
+					List<String> users = new ArrayList<String>();
+					List<Integer> high_scores = new ArrayList<Integer>();
+					ps = conn.prepareStatement("SELECT NAME, HighScore FROM Player " ); //Select the skin and highscore for the client to use and send over as a jsonObject.
+					rs = ps.executeQuery();
+					while(rs.next()) {
+						users.add(rs.getString("NAME"));
+						high_scores.add(rs.getInt("HighScore"));
+					}
+					
+					String user_json = gson.toJson(users);
+					String hs_json = gson.toJson(high_scores);
+					pw.print(user_json);
+					pw.flush();
+					pw.print(hs_json);
+					pw.flush();
+					break;
+				}
+				if (command.equals("Game Complete")) {
+					line = br.readLine();
+					player = gson.fromJson(line, Player.class);
 					String Name = "NAME = '"+player.getNAME()+"',";
 					String HighScore = "HighScore = "+player.getHighScore()+",";
 					String NewGamePlus = "NewGamePlus = " + player.getNewGamePlus()+",";
@@ -152,18 +193,15 @@ public class ServerThread extends Thread{
 					String Red = "RedFit = '" + Cosmos.get(1) + "',";
 					String Blue = "BlueFit = '" + Cosmos.get(2) + "',";
 					String Black = "BlackFit = '" + Cosmos.get(3) + "'";
-					ps = conn.prepareStatement("UPDATE Cosmetics SET "+White + Red +Blue +Black+ "WHERE ID = "+cosmetic_id +";");
+					ps = conn.prepareStatement("UPDATE Cosmetics SET "+White + Red +Blue +Black+ "WHERE ID = "+ player_id +";");
 					rs = ps.executeQuery();
 					
 					String response = "Succesfully Saved!";
-					os.writeObject(response);
-					os.flush();
-					
+					pw.print(response);
+					pw.flush();
+					break;
 				}
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (SQLException e) {
