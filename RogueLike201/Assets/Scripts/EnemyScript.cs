@@ -9,6 +9,8 @@ public class EnemyScript : MonoBehaviour
     public float nearDistance;
     public float stoppingDistance;
     public float startTimeBtwShots;
+    public bool stationary;
+    public float aggroDistance;
     private float timeBtwShots;
     private Vector3 targ;
     private Transform player;
@@ -31,7 +33,7 @@ public class EnemyScript : MonoBehaviour
 
         if (PlayerScript.alive)
         {
-            Vector3 targ = player.transform.position;
+            targ = player.transform.position;
         }
         targ.z = 0f;
 
@@ -42,29 +44,32 @@ public class EnemyScript : MonoBehaviour
         float angle = Mathf.Atan2(targ.y, targ.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 90.0f));
 
-        //move
-        if (Vector2.Distance(transform.position, player.position) < nearDistance)
+        if (!stationary && Vector2.Distance(transform.position, player.position) < aggroDistance)
         {
-            transform.position = Vector2.MoveTowards(transform.position, player.position, -speed * Time.deltaTime);
-        }
-        else if (Vector2.Distance(transform.position, player.position) > stoppingDistance)
-        {
-            transform.position = Vector2.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
-        }
-        else if (Vector2.Distance(transform.position, player.position) < stoppingDistance && Vector2.Distance(transform.position, player.position) > nearDistance)
-        {
-            transform.position = this.transform.position;
-        }
+            //move
+            if (Vector2.Distance(transform.position, player.position) < nearDistance)
+            {
+                transform.position = Vector2.MoveTowards(transform.position, player.position, -speed * Time.deltaTime);
+            }
+            else if (Vector2.Distance(transform.position, player.position) > stoppingDistance)
+            {
+                transform.position = Vector2.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
+            }
+            else if (Vector2.Distance(transform.position, player.position) < stoppingDistance && Vector2.Distance(transform.position, player.position) > nearDistance)
+            {
+                transform.position = this.transform.position;
+            }
 
-        //shoot
-        if (timeBtwShots <= 0)
-        {
-            Instantiate(shot, transform.position, Quaternion.identity);
-            timeBtwShots = startTimeBtwShots;
-        }
-        else
-        {
-            timeBtwShots -= Time.deltaTime;
+            //shoot
+            if (timeBtwShots <= 0)
+            {
+                Instantiate(shot, transform.position, Quaternion.identity);
+                timeBtwShots = startTimeBtwShots;
+            }
+            else
+            {
+                timeBtwShots -= Time.deltaTime;
+            }
         }
 
     }

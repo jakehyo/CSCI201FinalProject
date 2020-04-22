@@ -9,6 +9,7 @@ public class BossScript : MonoBehaviour
     public float nearDistance;
     public float stoppingDistance;
     public float startTimeBtwShots;
+    public float aggroDistance;
     private float timeBtwShots;
     private Transform player;
     private Vector3 targ;
@@ -44,31 +45,34 @@ public class BossScript : MonoBehaviour
 
         float angle = Mathf.Atan2(targ.y, targ.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 90.0f));
-        //move
-        if (Vector2.Distance(transform.position, player.position) < nearDistance)
+        if (Vector2.Distance(transform.position, player.position) < aggroDistance)
         {
-            transform.position = Vector2.MoveTowards(transform.position, player.position, -speed * Time.deltaTime);
-        }
-        else if (Vector2.Distance(transform.position, player.position) > stoppingDistance)
-        {
-            transform.position = Vector2.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
-        }
-        else if (Vector2.Distance(transform.position, player.position) < stoppingDistance && Vector2.Distance(transform.position, player.position) > nearDistance)
-        {
-            transform.position = this.transform.position;
-        }
+            //move
+            if (Vector2.Distance(transform.position, player.position) < nearDistance)
+            {
+                transform.position = Vector2.MoveTowards(transform.position, player.position, -speed * Time.deltaTime);
+            }
+            else if (Vector2.Distance(transform.position, player.position) > stoppingDistance)
+            {
+                transform.position = Vector2.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
+            }
+            else if (Vector2.Distance(transform.position, player.position) < stoppingDistance && Vector2.Distance(transform.position, player.position) > nearDistance)
+            {
+                transform.position = this.transform.position;
+            }
 
-        //shoot
-        if (timeBtwShots <= 0)
-        {
-            Instantiate(shot, centerShot.position, Quaternion.identity);
-            Instantiate(shot, rightShot.position, Quaternion.identity);
-            Instantiate(shot, leftShot.position, Quaternion.identity);
-            timeBtwShots = startTimeBtwShots;
-        }
-        else
-        {
-            timeBtwShots -= Time.deltaTime;
+            //shoot
+            if (timeBtwShots <= 0)
+            {
+                Instantiate(shot, centerShot.position, Quaternion.identity);
+                Instantiate(shot, rightShot.position, Quaternion.identity);
+                Instantiate(shot, leftShot.position, Quaternion.identity);
+                timeBtwShots = startTimeBtwShots;
+            }
+            else
+            {
+                timeBtwShots -= Time.deltaTime;
+            }
         }
 
     }

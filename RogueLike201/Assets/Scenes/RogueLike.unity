@@ -5384,6 +5384,7 @@ MonoBehaviour:
   nearDistance: 2.5
   stoppingDistance: 5
   startTimeBtwShots: 0.5
+  aggroDistance: 10
   rightShot: {fileID: 655822634}
   leftShot: {fileID: 1022270754}
   centerShot: {fileID: 1316234948}
@@ -11619,6 +11620,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3866281559433675617, guid: ac2eefebc5f24134180caf05d0bf6044,
         type: 3}
+    - target: {fileID: -8646580266770380670, guid: c384e1ab017f6c94895ed1ce138ebdb3,
+        type: 3}
+      propertyPath: aggroDistance
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 690307425720439438, guid: c384e1ab017f6c94895ed1ce138ebdb3,
         type: 3}
       propertyPath: m_LocalPosition.x
