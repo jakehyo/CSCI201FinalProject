@@ -141,10 +141,11 @@ public class ServerThread extends Thread{
 					line = br.readLine();
 					player = gson.fromJson(line, Player.class);
 					String NAME = player.getNAME();
+					//ps = conn.prepareStatement("SELECT * FROM Player WHERE NAME = '123456'");
 					ps = conn.prepareStatement("SELECT * FROM Player WHERE NAME = '" + NAME + "'");
 					rs = ps.executeQuery();
 					String response = "";
-					if (rs != null) {
+					if (rs.next()) {
 						response = "Taken\n";
 					}
 					else {

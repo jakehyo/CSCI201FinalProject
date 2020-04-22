@@ -1,4 +1,4 @@
-DROP DATABASE PoppinRobots;
+DROP DATABASE IF EXISTS PoppinRobots;
 CREATE DATABASE PoppinRobots;
 USE PoppinRobots;
 CREATE TABLE Cosmetics (
