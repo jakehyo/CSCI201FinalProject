@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemy
+  - Coin
+  - Weapon
   layers:
   - Default
   - TransparentFX
@@ -39,6 +41,18 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 904172109
+    locked: 0
+  - name: Sprite Layer
+    uniqueID: 3788858181
+    locked: 0
+  - name: Stationary Objects
+    uniqueID: 814197757
+    locked: 0
+  - name: Moving Objects
+    uniqueID: 4006711117
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
