@@ -1,6 +1,6 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using Final_Project_Client;
 using TMPro;
 
 public class HighScores : MonoBehaviour
@@ -14,9 +14,13 @@ public class HighScores : MonoBehaviour
 
         float templateHeight = 25f;
 
+        Client client = new Client(9999);
+
+        ArrayList[] highScores = client.getHighScores();
+        // stringArray.Select(Int32.Parse).ToList();
         // get some vector/array with 5 values
 
-        int size = 5;
+        int size = highScores[0].Count;
 
         for (int i = 0; i < size; i++)
         {
@@ -24,7 +28,9 @@ public class HighScores : MonoBehaviour
             RectTransform entryRectTransform = entryTransform.GetComponent<RectTransform>();
             entryRectTransform.anchoredPosition = new Vector2(0, -10 - templateHeight * i);
             entryTransform.gameObject.SetActive(true);
-            // set text to array(i)
+            entryTransform.Find("UserEntry").GetComponent<TextMeshProUGUI>().text = (string)highScores[0][i];
+            entryTransform.Find("ScoreEntry").GetComponent<TextMeshProUGUI>().text = highScores[1][i].ToString();
+            Debug.Log(highScores[0][i] + " " + highScores[1][i]);
         }
     }
 
