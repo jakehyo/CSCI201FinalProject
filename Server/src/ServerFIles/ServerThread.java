@@ -146,7 +146,7 @@ public class ServerThread extends Thread{
 					rs = ps.executeQuery();
 					String response = "";
 					if (rs.next()) {
-						response = "Taken\n";
+						response = "Taken";
 					}
 					else {
 						System.out.println("Registering user: " + NAME);
@@ -154,10 +154,11 @@ public class ServerThread extends Thread{
 						ps.executeUpdate();
 						ps = conn.prepareStatement("INSERT INTO Player (NAME,HighScore, NewGamePlus,WeaponID,Money) values ('" + NAME + "', 0,false,0, 0);");
 						ps.executeUpdate();
-						response = "Valid\n";
+						response = "Valid";
 					}
 					pw.print(response);
 					pw.flush();
+					
 					break;
 				}
 				if ( command.contentEquals("HighScores")) {

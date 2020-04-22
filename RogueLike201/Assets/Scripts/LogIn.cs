@@ -7,6 +7,7 @@ using TMPro;
 public class LogIn : MonoBehaviour
 {
     public TMP_InputField userInput;
+    public Transform logInErrorText;
 
     public void Register()
     {
@@ -15,7 +16,7 @@ public class LogIn : MonoBehaviour
         if (username != null)
         {
 
-            Client client = new Client(9999);
+            Client client = new Client(9999, logInErrorText);
 
             client.logIn(username);
         }

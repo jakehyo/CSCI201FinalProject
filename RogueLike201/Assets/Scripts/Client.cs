@@ -15,9 +15,12 @@ namespace Final_Project_Client
         public Player player;
         public Socket socket;
         public NetworkStream netStream;
+        public Transform errorOutput;
 
-        public Client(int port)
+        public Client(int port, Transform errorOutput)
         {
+            this.errorOutput = errorOutput;
+
             socket = null;
             // create client object
             try
@@ -94,6 +97,7 @@ namespace Final_Project_Client
             // found username
             if (response.Contains("Found"))
             {
+                errorOutput.gameObject.SetActive(false);
                 // read in JSON string and deserialize the object
                 messageReceived = new byte[1024];
                 byteRecv = this.socket.Receive(messageReceived);
@@ -106,6 +110,7 @@ namespace Final_Project_Client
             // did not find username
             else if (response.Contains("Absent"))
             {
+                errorOutput.gameObject.SetActive(true);
                 // MENU SHOULD PROMPT THE USER TO ENTER ANOTHER USERNAME
                 // OR SUGGEST REGISTERING AS A NEW USER
                 // OR HAVE THE BACK OPTION
@@ -135,20 +140,26 @@ namespace Final_Project_Client
             // print response to the Console (for testing purposes)
             string response = Encoding.ASCII.GetString(messageReceived, 0, byteRecv);
 
+            Debug.Log("Received: " + response);
+
             if (response.Contains("Valid"))
             {
-                // read in the new JSON string
-                messageReceived = new byte[1024];
-                byteRecv = this.socket.Receive(messageReceived);
-                response = Encoding.ASCII.GetString(messageReceived, 0, byteRecv);
+                errorOutput.gameObject.SetActive(false);
+                //messageReceived = new byte[1024];
+                //int byteRecv2 = this.socket.Receive(messageReceived);
+                //response = Encoding.ASCII.GetString(messageReceived, 0, byteRecv2);
 
                 // assign to the new player
-                this.player = JsonConvert.DeserializeObject<Player>(response);
+                //this.player = JsonConvert.DeserializeObject<Player>(response);
+
                 Debug.Log("Valid Registration");
+
+                // send this.player to game
             }
             else if (response.Contains("Taken"))
             {
                 Debug.Log("Username Already Exists");
+                errorOutput.gameObject.SetActive(true);
                 // MENU SHOULD PROMPT THE USER TO ENTER ANOTHER USERNAME
                 // OR PROCEED TO LOGIN MENU
             }

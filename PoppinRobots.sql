@@ -1,4 +1,4 @@
-DROP DATABASE IF EXISTS PoppinRobots;
+DROP DATABASE PoppinRobots;
 CREATE DATABASE PoppinRobots;
 USE PoppinRobots;
 CREATE TABLE Cosmetics (
@@ -10,7 +10,8 @@ CREATE TABLE Cosmetics (
     );
     INSERT INTO Cosmetics ( GoldFit, RedFit,BlueFit,BlackFit)
 		values(0,1,1,0),
-         (0,0,0,0) ;
+         (0,0,0,0),
+         (0,1,1,0);
 CREATE TABLE Player(
 	PlayerID INT(6) PRIMARY KEY NOT NULL AUTO_INCREMENT,
     NAME VARCHAR(20) NOT NULL,
@@ -21,5 +22,6 @@ CREATE TABLE Player(
     FOREIGN KEY fk5(PlayerID) REFERENCES Cosmetics(ID)
     );
     INSERT INTO Player (NAME,HighScore, NewGamePlus,WeaponID,Money)
-		values ('Chris', 100000,false, 0, 200),
-        ('Bris', 100000,false, 0, 200);
+		values ('Chris', 1000,false, 0, 200),
+        ('Bris', 100000,false, 0, 200),
+        ('Eli', 900000,false, 0, 200);

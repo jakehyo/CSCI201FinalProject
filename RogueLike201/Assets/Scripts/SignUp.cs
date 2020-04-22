@@ -7,6 +7,7 @@ using TMPro;
 public class SignUp : MonoBehaviour
 {
     public TMP_InputField userInput;
+    public Transform signUpErrorText;
 
     public void Register()
     {
@@ -14,7 +15,7 @@ public class SignUp : MonoBehaviour
 
         if (username != null)
         {
-            Client client = new Client(9999);
+            Client client = new Client(9999, signUpErrorText);
 
             client.registerUser(username);
         }
