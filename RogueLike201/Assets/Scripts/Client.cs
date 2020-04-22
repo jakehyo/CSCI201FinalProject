@@ -4,6 +4,8 @@ using System.Net.Sockets;
 using System.Text;
 using Newtonsoft.Json;
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Final_Project_Client
 {
@@ -76,7 +78,7 @@ namespace Final_Project_Client
             this.socket.Send(messageSent);
 
             // serialize the data to be sent across the socket
-            string JSONresult = JsonConvert.SerializeObject(this.player);
+            string JSONresult = JsonConvert.SerializeObject(this.player) + "\n";
             messageSent = Encoding.ASCII.GetBytes(JSONresult);
             this.socket.Send(messageSent);
 
@@ -90,20 +92,19 @@ namespace Final_Project_Client
             Debug.Log(response);
 
             // found username
-            if (response.Contains("Succesfully Found Your Profile"))
+            if (response.Contains("Found"))
             {
                 // read in JSON string and deserialize the object
                 messageReceived = new byte[1024];
                 byteRecv = this.socket.Receive(messageReceived);
-                response = Encoding.ASCII.GetString(messageReceived,
-                                                0, byteRecv);
+                response = Encoding.ASCII.GetString(messageReceived, 0, byteRecv);
 
                 // assign the object to the player object
                 this.player = JsonConvert.DeserializeObject<Player>(response);
                 Debug.Log("Found the profile");
             }
             // did not find username
-            else if (response.Contains("No Username Found"))
+            else if (response.Contains("Absent"))
             {
                 // MENU SHOULD PROMPT THE USER TO ENTER ANOTHER USERNAME
                 // OR SUGGEST REGISTERING AS A NEW USER
@@ -123,35 +124,66 @@ namespace Final_Project_Client
             this.socket.Send(messageSent);
 
             // serialize the data to be sent across the socket
-            string JSONresult = JsonConvert.SerializeObject(this.player);
+            string JSONresult = JsonConvert.SerializeObject(this.player) + "\n";
             messageSent = Encoding.ASCII.GetBytes(JSONresult);
+            Debug.Log(JSONresult);
             this.socket.Send(messageSent);
 
             byte[] messageReceived = new byte[1024];
             int byteRecv = this.socket.Receive(messageReceived);
 
             // print response to the Console (for testing purposes)
-            string response = Encoding.ASCII.GetString(messageReceived,
-                                                0, byteRecv);
+            string response = Encoding.ASCII.GetString(messageReceived, 0, byteRecv);
 
-            if (response.Contains("Valid Registration"))
+            if (response.Contains("Valid"))
             {
                 // read in the new JSON string
                 messageReceived = new byte[1024];
                 byteRecv = this.socket.Receive(messageReceived);
-                response = Encoding.ASCII.GetString(messageReceived,
-                                                0, byteRecv);
+                response = Encoding.ASCII.GetString(messageReceived, 0, byteRecv);
 
                 // assign to the new player
                 this.player = JsonConvert.DeserializeObject<Player>(response);
-
+                Debug.Log("Valid Registration");
             }
-            else if (response.Contains("Username Already Exists"))
+            else if (response.Contains("Taken"))
             {
                 Debug.Log("Username Already Exists");
                 // MENU SHOULD PROMPT THE USER TO ENTER ANOTHER USERNAME
                 // OR PROCEED TO LOGIN MENU
             }
+        }
+
+        public ArrayList[] getHighScores()
+        {
+            ArrayList userList = new ArrayList();
+            ArrayList scoreList = new ArrayList();
+
+            byte[] messageSent = Encoding.ASCII.GetBytes("HighScores\n");
+            this.socket.Send(messageSent);
+
+            byte[] messageReceived = new byte[1024];
+            int byteRecv = this.socket.Receive(messageReceived);
+            string response = Encoding.ASCII.GetString(messageReceived, 0, byteRecv);
+
+            userList = JsonConvert.DeserializeObject<ArrayList>(response);
+
+            messageReceived = new byte[1024];
+            byteRecv = this.socket.Receive(messageReceived);
+            response = Encoding.ASCII.GetString(messageReceived, 0, byteRecv);
+
+            scoreList = JsonConvert.DeserializeObject<ArrayList>(response);
+
+            ArrayList[] retList = { userList, scoreList };
+            /*
+            for (int i = 0; i < userList.Count; i++)
+            {
+                KeyValuePair<string, int> pair = new KeyValuePair<string, int>((string)userList[i], (int)scoreList[i]);
+                retList.Add(pair);
+                Debug.Log(pair.First + " " + pair.Second);
+            }
+            */
+            return retList;
         }
 
         public void updateJSON(int prevScore, bool gameFinished, int weaponID, int money)
