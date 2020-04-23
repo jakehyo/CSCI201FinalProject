@@ -9,7 +9,6 @@ public class PlayerScript : MonoBehaviour
     public int coinCount;
     public GameObject crossHair;
     public GameObject weaponHolder;
-    private float timeBtwShots;
     public float startTimeBtwShots;
 
     //private WeaponSwitchScript _switchScript;
@@ -17,7 +16,6 @@ public class PlayerScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        timeBtwShots = 0.0f;
     }
 
     // Update is called once per frame
@@ -27,19 +25,6 @@ public class PlayerScript : MonoBehaviour
         updateCrossHair();
 
         movePlayer();
-
-        if (timeBtwShots <= 0.0f)
-        {
-            //if left click is pressed/held
-            if (Input.GetMouseButton(0))
-            {
-                fireWeapon();
-            }
-        }
-        else
-        {
-            timeBtwShots -= Time.deltaTime;
-        }
 
     }
 
@@ -52,13 +37,6 @@ public class PlayerScript : MonoBehaviour
     public void addCoin()
     {
         coinCount++;
-    }
-
-    void fireWeapon()
-    {
-        weaponHolder = transform.GetChild(2).gameObject;
-        weaponHolder.GetComponent<WeaponSwitchScript>().fireWeapon();
-        timeBtwShots = startTimeBtwShots;
     }
 
     void updateCrossHair()

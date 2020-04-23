@@ -4,12 +4,7 @@ using UnityEngine;
 
 public class WeaponScript : MonoBehaviour
 {
-    public float speed;
-    public float lifetime;
-    public float distance;
-    public LayerMask whatIsSolid;
-    public int damage;
-
+    public float timeBtwShots;
     public GameObject projectile;
 
 

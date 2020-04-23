@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class WeaponSwitchScript : MonoBehaviour
 {
+    private float fireRate;
     public int selectedWeapon = 0;
     public Transform[] prefabs;
     // Start is called before the first frame update
@@ -42,7 +43,21 @@ public class WeaponSwitchScript : MonoBehaviour
             }
         }
         **/
-        if(selectedWeapon != previousWeapon)
+        if (fireRate <= 0.0f)
+        {
+            //if left click is pressed/held
+            if (Input.GetMouseButton(0))
+            {
+                fireWeapon();
+            }
+        }
+        else
+        {
+            fireRate -= Time.deltaTime;
+        }
+
+
+        if (selectedWeapon != previousWeapon)
         {
             SelectWeapon();
         }
@@ -63,6 +78,7 @@ public class WeaponSwitchScript : MonoBehaviour
             }
             i++;
         }
+        fireRate = transform.GetChild(selectedWeapon).GetComponent<WeaponScript>().timeBtwShots;
     }
 
     public void setWeapon(int weaponId)
@@ -79,5 +95,6 @@ public class WeaponSwitchScript : MonoBehaviour
     public void fireWeapon()
     {
         transform.GetChild(selectedWeapon).GetComponent<WeaponScript>().fireWeapon();
+        fireRate = transform.GetChild(selectedWeapon).GetComponent<WeaponScript>().timeBtwShots;
     }
 }
