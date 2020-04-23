@@ -558,6 +558,7 @@ GameObject:
   - component: {fileID: 224759670208729995}
   - component: {fileID: 5026582796153673125}
   - component: {fileID: 5026582796153673124}
+  - component: {fileID: 224759670208729998}
   m_Layer: 0
   m_Name: exitPortal
   m_TagString: Untagged
@@ -650,6 +651,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &224759670208729998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 224759670208729994}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6798b886500adfa4286991abc9424318, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!483693784 &312396052273670673
 TilemapRenderer:
   m_ObjectHideFlags: 0

@@ -6,10 +6,12 @@ public class PickupScript : MonoBehaviour
 {
     public bool isWeapon;
     public int weaponId;
+    public AudioSource audioData;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        audioData = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -20,18 +22,37 @@ public class PickupScript : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") && isWeapon == false)
+        bool interacted = false;
+        if (collision.CompareTag("Player"))
         {
-            GameObject player = GameObject.FindGameObjectWithTag("Player");
-            player.GetComponent<PlayerScript>().addCoin();
-            Object.Destroy(gameObject);
+            if (isWeapon == false)
+            {
+                GameObject player = GameObject.FindGameObjectWithTag("Player");
+                player.GetComponent<PlayerScript>().addCoin();
+                audioData.Play();
+                interacted = true;
+                StartCoroutine(WaitAudio());
+            }
+            else if (Input.GetKeyDown(KeyCode.E))
+            {
+                GameObject player = GameObject.FindGameObjectWithTag("Player");
+                player.GetComponentInChildren<WeaponSwitchScript>().setWeapon(weaponId);
+                interacted = true;
+                Object.Destroy(gameObject);
+            }
         }
 
-        if(collision.CompareTag("Player") && Input.GetKey(KeyCode.E) )
+        if (interacted == true)
         {
-            GameObject player = GameObject.FindGameObjectWithTag("Player");
-            player.GetComponentInChildren<WeaponSwitchScript>().setWeapon(weaponId);
-            Object.Destroy(gameObject);
+            SpriteRenderer sr = GetComponent<SpriteRenderer>();
+            sr.enabled = false;
         }
     }
+    IEnumerator WaitAudio()
+    {
+        yield return new WaitForSeconds(audioData.clip.length);
+        Object.Destroy(gameObject);
+    }
 }
+
+

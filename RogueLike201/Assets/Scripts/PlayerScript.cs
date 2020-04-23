@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerScript : MonoBehaviour
 {
     public Rigidbody2D rb;
-    public int moveVal;
+    public float moveVal;
     public int coinCount;
     public GameObject crossHair;
     public GameObject weaponHolder;

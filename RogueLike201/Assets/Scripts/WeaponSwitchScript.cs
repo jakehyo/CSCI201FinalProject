@@ -5,6 +5,7 @@ using UnityEngine;
 public class WeaponSwitchScript : MonoBehaviour
 {
     public int selectedWeapon = 0;
+    public Transform[] prefabs;
     // Start is called before the first frame update
 
     void Start()
@@ -66,10 +67,13 @@ public class WeaponSwitchScript : MonoBehaviour
 
     public void setWeapon(int weaponId)
     {
+        int previousWeapon = selectedWeapon;
         if(weaponId >= 0)
         {
             selectedWeapon = weaponId;
         }
+
+        Instantiate(prefabs[previousWeapon],transform.position, Quaternion.LookRotation(Vector3.forward,Vector3.up));
     }
 
     public void fireWeapon()

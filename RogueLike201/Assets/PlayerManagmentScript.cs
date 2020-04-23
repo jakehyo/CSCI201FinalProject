@@ -9,7 +9,7 @@ public class PlayerManagmentScript : MonoBehaviour
 
     void Start()
     {
-        Debug.Log(transform.position);
+        //Debug.Log(transform.position);
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         player.transform.position = transform.position;
     }

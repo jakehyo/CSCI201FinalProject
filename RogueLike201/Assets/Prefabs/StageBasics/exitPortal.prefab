@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 224759671201143403}
   - component: {fileID: 5026582794993884229}
   - component: {fileID: 5026582794993884228}
+  - component: {fileID: 7112699381219184891}
   m_Layer: 0
   m_Name: exitPortal
   m_TagString: Untagged
@@ -136,6 +137,18 @@ MonoBehaviour:
   transition: {fileID: 5026582795488060368}
   transitionTime: 1
   levelName: 
+--- !u!114 &7112699381219184891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 224759671201143402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6798b886500adfa4286991abc9424318, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5026582795488060374
 GameObject:
   m_ObjectHideFlags: 0

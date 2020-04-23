@@ -16,6 +16,10 @@ public class LevelControl : MonoBehaviour
         }
     }
 
+    public void OnMouseClickGuest() { 
+        SceneManager.LoadScene("room_start"); 
+    }
+
     IEnumerator loadLevel()
     {
         transition.SetTrigger("Start");
