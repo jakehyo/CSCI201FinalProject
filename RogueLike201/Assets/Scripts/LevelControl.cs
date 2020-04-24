@@ -8,6 +8,8 @@ public class LevelControl : MonoBehaviour
     public Animator transition;
     public float transitionTime;
     public string levelName;
+    public GameObject playerObject;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
@@ -16,7 +18,13 @@ public class LevelControl : MonoBehaviour
         }
     }
 
-    public void OnMouseClickGuest() { 
+    public void OnMouseClickGuest() {
+        Player player = new Player();
+        player.username = "Guest";
+
+        Instantiate(playerObject, Vector3.up, Quaternion.identity);
+        playerObject.GetComponent<PlayerScript>().playerData = player;
+
         SceneManager.LoadScene("room_start"); 
     }
 

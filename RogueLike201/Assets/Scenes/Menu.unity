@@ -1451,6 +1451,8 @@ MonoBehaviour:
   transition: {fileID: 0}
   transitionTime: 0
   levelName: 
+  playerObject: {fileID: 5237283934366260170, guid: cd793344cf573f24c97e22cb2f6f5806,
+    type: 3}
 --- !u!1 &385694970
 GameObject:
   m_ObjectHideFlags: 0

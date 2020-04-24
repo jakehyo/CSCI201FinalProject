@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class Client:MonoBehaviour
 {
@@ -71,7 +72,7 @@ public class Client:MonoBehaviour
     public void logIn(string username)
     {
         // create a new player and assign the text input as the username
-        this.player = new Player();
+        this.player = gameObject.AddComponent<Player>() as Player;
         this.player.username = username;
         Console.WriteLine(username);
 
@@ -108,8 +109,9 @@ public class Client:MonoBehaviour
 
             //Creates playerObject with playerData passed in.
             Instantiate(playerObject, Vector3.up, Quaternion.identity);
-            playerObject.GetComponent<PlayerScript>().playerData = player;
+            playerObject.GetComponent<PlayerScript>().playerData = this.player;
 
+            SceneManager.LoadScene("room_start");
 
         }
         // did not find username
@@ -126,7 +128,7 @@ public class Client:MonoBehaviour
     {
         // Console.WriteLine("registering user " + username);
         Debug.Log("registering user " + username);
-        this.player = new Player();
+        this.player = gameObject.AddComponent<Player>() as Player;
         this.player.username = username;
 
         // send command to the server
@@ -157,7 +159,13 @@ public class Client:MonoBehaviour
             // assign to the new player
             //this.player = JsonConvert.DeserializeObject<Player>(response);
 
+            //Creates playerObject with playerData passed in.
+            Instantiate(playerObject, Vector3.up, Quaternion.identity);
+            playerObject.GetComponent<PlayerScript>().playerData = this.player;
+
             Debug.Log("Valid Registration");
+
+            SceneManager.LoadScene("room_start");
 
             // send this.player to game
         }
