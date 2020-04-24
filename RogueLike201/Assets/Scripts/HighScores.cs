@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System;
 using UnityEngine;
-using Final_Project_Client;
 using TMPro;
 
 public class HighScores : MonoBehaviour

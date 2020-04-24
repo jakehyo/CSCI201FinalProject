@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Final_Project_Client;
 using TMPro;
 
 public class SignUp : MonoBehaviour
