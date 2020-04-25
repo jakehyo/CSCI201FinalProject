@@ -29,6 +29,7 @@ public class PickupScript : MonoBehaviour
             {
                 GameObject player = GameObject.FindGameObjectWithTag("Player");
                 player.GetComponent<PlayerScript>().addCoin();
+
                 audioData.Play();
                 interacted = true;
                 StartCoroutine(WaitAudio());
@@ -46,6 +47,8 @@ public class PickupScript : MonoBehaviour
         {
             SpriteRenderer sr = GetComponent<SpriteRenderer>();
             sr.enabled = false;
+            Collider2D collider = GetComponent<Collider2D>();
+            collider.enabled = false;
         }
     }
     IEnumerator WaitAudio()

@@ -7,7 +7,6 @@ public class HighScores : MonoBehaviour
 {
     public Transform entryContainer;
     public Transform entryTemplate;
-    public Transform errorOutput;
 
     public void populate()
     {
@@ -15,7 +14,8 @@ public class HighScores : MonoBehaviour
 
         float templateHeight = 25f;
 
-        Client client = new Client(9999, errorOutput);
+        Client client = gameObject.AddComponent<Client>();
+        client.Setup();
 
         ArrayList[] highScores = client.getHighScores();
         // stringArray.Select(Int32.Parse).ToList();

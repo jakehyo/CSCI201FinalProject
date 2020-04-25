@@ -994,7 +994,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 962768607}
-        m_MethodName: Register
+        m_MethodName: SignUpFunction
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1003,7 +1003,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 1
 --- !u!1 &277875194
 GameObject:
   m_ObjectHideFlags: 0
@@ -2500,10 +2500,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 962768602}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e76cd133580e7147a682283e8e99df9, type: 3}
+  m_Script: {fileID: 11500000, guid: dd942d0bbad0c554296a40a9dc959376, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  userInput: {fileID: 579819723}
+  player: {fileID: 0}
+  playerObject: {fileID: 5237283934366260170, guid: cd793344cf573f24c97e22cb2f6f5806,
+    type: 3}
+  LI_UserInput: {fileID: 0}
+  SU_UserInput: {fileID: 579819723}
+  logInErrorText: {fileID: 0}
   signUpErrorText: {fileID: 17070668}
 --- !u!1 &1041194887
 GameObject:
@@ -2617,11 +2622,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1041194887}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10e52d4a758a8114587e992e0d6bae5b, type: 3}
+  m_Script: {fileID: 11500000, guid: dd942d0bbad0c554296a40a9dc959376, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  userInput: {fileID: 263503250}
+  player: {fileID: 0}
+  playerObject: {fileID: 5237283934366260170, guid: cd793344cf573f24c97e22cb2f6f5806,
+    type: 3}
+  LI_UserInput: {fileID: 263503250}
+  SU_UserInput: {fileID: 0}
   logInErrorText: {fileID: 1234516895}
+  signUpErrorText: {fileID: 0}
 --- !u!1 &1233777387
 GameObject:
   m_ObjectHideFlags: 0
@@ -2656,7 +2666,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entryContainer: {fileID: 1987408590}
   entryTemplate: {fileID: 902299587}
-  errorOutput: {fileID: 59621939}
 --- !u!114 &1233777389
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3419,7 +3428,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1041194892}
-        m_MethodName: Register
+        m_MethodName: LogInFunction
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3428,7 +3437,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 1
 --- !u!1 &1418028473
 GameObject:
   m_ObjectHideFlags: 0

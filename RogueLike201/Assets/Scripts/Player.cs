@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [SerializableAttribute]
-public class Player : MonoBehaviour
+public class Player
 {
     public int playerID { get; set; }
     public string username { get; set; }

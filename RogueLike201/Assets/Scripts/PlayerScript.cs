@@ -7,7 +7,6 @@ public class PlayerScript : MonoBehaviour
     public Rigidbody2D rb;
     public Player playerData;
     public float moveVal;
-    public int coinCount;
     public GameObject crossHair;
     public GameObject weaponHolder;
     public float startTimeBtwShots;
@@ -38,7 +37,7 @@ public class PlayerScript : MonoBehaviour
 
     public void addCoin()
     {
-        coinCount++;
+        playerData.money++;
     }
 
     void updateCrossHair()

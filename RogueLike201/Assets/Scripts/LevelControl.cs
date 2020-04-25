@@ -19,11 +19,13 @@ public class LevelControl : MonoBehaviour
     }
 
     public void OnMouseClickGuest() {
+        //Player player = gameObject.AddComponent<Player>();
         Player player = new Player();
         player.username = "Guest";
 
         Instantiate(playerObject, Vector3.up, Quaternion.identity);
-        playerObject.GetComponent<PlayerScript>().playerData = player;
+        GameObject Player = GameObject.FindGameObjectWithTag("Player");
+        Player.GetComponent<PlayerScript>().playerData = player;
 
         SceneManager.LoadScene("room_start"); 
     }

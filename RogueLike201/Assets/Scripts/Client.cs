@@ -7,19 +7,23 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using TMPro;
 
-public class Client:MonoBehaviour
+public class Client : MonoBehaviour
 {
     // constructor for the client
-    public Player player;
     public Socket socket;
     public NetworkStream netStream;
-    public Transform errorOutput;
     public GameObject playerObject;
+    public TMP_InputField LI_UserInput;
+    public TMP_InputField SU_UserInput;
+    public Transform logInErrorText;
+    public Transform signUpErrorText;
 
-    public Client(int port, Transform errorOutput)
+
+    public void Setup()
     {
-        this.errorOutput = errorOutput;
+        int port = 9999;
 
         socket = null;
         // create client object
@@ -69,11 +73,12 @@ public class Client:MonoBehaviour
         }
     }
 
-    public void logIn(string username)
+    private void logIn(string username)
     {
         // create a new player and assign the text input as the username
-        this.player = gameObject.AddComponent<Player>() as Player;
-        this.player.username = username;
+        //Player player = gameObject.AddComponent<Player>();
+        Player player = new Player();
+        player.username = username;
         Console.WriteLine(username);
 
         // send the command 
@@ -81,7 +86,7 @@ public class Client:MonoBehaviour
         this.socket.Send(messageSent);
 
         // serialize the data to be sent across the socket
-        string JSONresult = JsonConvert.SerializeObject(this.player) + "\n";
+        string JSONresult = JsonConvert.SerializeObject(player) + "\n";
         messageSent = Encoding.ASCII.GetBytes(JSONresult);
         this.socket.Send(messageSent);
 
@@ -97,19 +102,20 @@ public class Client:MonoBehaviour
         // found username
         if (response.Contains("Found"))
         {
-            errorOutput.gameObject.SetActive(false);
+            //logInErrorText.gameObject.SetActive(false);
             // read in JSON string and deserialize the object
             messageReceived = new byte[1024];
             byteRecv = this.socket.Receive(messageReceived);
             response = Encoding.ASCII.GetString(messageReceived, 0, byteRecv);
 
             // assign the object to the player object
-            this.player = JsonConvert.DeserializeObject<Player>(response);
+            player = JsonConvert.DeserializeObject<Player>(response);
             Debug.Log("Found the profile");
 
             //Creates playerObject with playerData passed in.
             Instantiate(playerObject, Vector3.up, Quaternion.identity);
-            playerObject.GetComponent<PlayerScript>().playerData = this.player;
+            GameObject Player = GameObject.FindGameObjectWithTag("Player");
+            Player.GetComponent<PlayerScript>().playerData = player;
 
             SceneManager.LoadScene("room_start");
 
@@ -117,26 +123,27 @@ public class Client:MonoBehaviour
         // did not find username
         else if (response.Contains("Absent"))
         {
-            errorOutput.gameObject.SetActive(true);
+            //logInErrorText.gameObject.SetActive(true);
             // MENU SHOULD PROMPT THE USER TO ENTER ANOTHER USERNAME
             // OR SUGGEST REGISTERING AS A NEW USER
             // OR HAVE THE BACK OPTION
         }
     }
 
-    public void registerUser(string username)
+    private void registerUser(string username)
     {
         // Console.WriteLine("registering user " + username);
         Debug.Log("registering user " + username);
-        this.player = gameObject.AddComponent<Player>() as Player;
-        this.player.username = username;
+        //Player player = gameObject.AddComponent<Player>();
+        Player player = new Player();
+        player.username = username;
 
         // send command to the server
         byte[] messageSent = Encoding.ASCII.GetBytes("Register\n");
         this.socket.Send(messageSent);
 
         // serialize the data to be sent across the socket
-        string JSONresult = JsonConvert.SerializeObject(this.player) + "\n";
+        string JSONresult = JsonConvert.SerializeObject(player) + "\n";
         messageSent = Encoding.ASCII.GetBytes(JSONresult);
         Debug.Log(JSONresult);
         this.socket.Send(messageSent);
@@ -151,7 +158,7 @@ public class Client:MonoBehaviour
 
         if (response.Contains("Valid"))
         {
-            errorOutput.gameObject.SetActive(false);
+            //signUpErrorText.gameObject.SetActive(false);
             //messageReceived = new byte[1024];
             //int byteRecv2 = this.socket.Receive(messageReceived);
             //response = Encoding.ASCII.GetString(messageReceived, 0, byteRecv2);
@@ -161,7 +168,8 @@ public class Client:MonoBehaviour
 
             //Creates playerObject with playerData passed in.
             Instantiate(playerObject, Vector3.up, Quaternion.identity);
-            playerObject.GetComponent<PlayerScript>().playerData = this.player;
+            GameObject Player = GameObject.FindGameObjectWithTag("Player");
+            Player.GetComponent<PlayerScript>().playerData = player;
 
             Debug.Log("Valid Registration");
 
@@ -172,7 +180,7 @@ public class Client:MonoBehaviour
         else if (response.Contains("Taken"))
         {
             Debug.Log("Username Already Exists");
-            errorOutput.gameObject.SetActive(true);
+            //signUpErrorText.gameObject.SetActive(true);
             // MENU SHOULD PROMPT THE USER TO ENTER ANOTHER USERNAME
             // OR PROCEED TO LOGIN MENU
         }
@@ -210,6 +218,7 @@ public class Client:MonoBehaviour
         return retList;
     }
 
+    /*
     public void updateJSON(int prevScore, bool gameFinished, int weaponID, int money)
     {
         // Console.WriteLine("updating user information for user: " + player.username);
@@ -256,6 +265,32 @@ public class Client:MonoBehaviour
         messageSent = Encoding.ASCII.GetBytes(JSONresult);
         this.socket.Send(messageSent);
 
+    }
+    */
+
+    public void LogInFunction()
+    {
+        string username = LI_UserInput.text;
+
+        if (username != null)
+        {
+
+            Client client = gameObject.AddComponent<Client>();
+            client.Setup();
+            client.logIn(username);
+        }
+    }
+
+    public void SignUpFunction()
+    {
+        string username = SU_UserInput.text;
+
+        if (username != null)
+        {
+            Client client = gameObject.AddComponent<Client>();
+            client.Setup();
+            client.registerUser(username);
+        }
     }
 }
 
