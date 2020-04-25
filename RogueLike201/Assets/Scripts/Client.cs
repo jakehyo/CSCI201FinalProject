@@ -275,7 +275,7 @@ public class Client : MonoBehaviour
         if (username != null)
         {
 
-            Client client = gameObject.AddComponent<Client>();
+            Client client = GetComponentInParent<Client>();
             client.Setup();
             client.logIn(username);
         }
@@ -287,7 +287,7 @@ public class Client : MonoBehaviour
 
         if (username != null)
         {
-            Client client = gameObject.AddComponent<Client>();
+            Client client = GetComponentInParent<Client>();
             client.Setup();
             client.registerUser(username);
         }

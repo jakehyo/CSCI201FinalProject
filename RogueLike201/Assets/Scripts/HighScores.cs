@@ -14,7 +14,7 @@ public class HighScores : MonoBehaviour
 
         float templateHeight = 25f;
 
-        Client client = gameObject.AddComponent<Client>();
+        Client client = GetComponentInParent<Client>();
         client.Setup();
 
         ArrayList[] highScores = client.getHighScores();
