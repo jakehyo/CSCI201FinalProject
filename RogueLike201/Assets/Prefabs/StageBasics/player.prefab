@@ -46,6 +46,7 @@ MonoBehaviour:
   timeBtwShots: 1
   projectile: {fileID: 8574991088433991020, guid: 23d3ad7d36dcc61458a01f94ad7fda97,
     type: 3}
+  audioData: {fileID: 0}
 --- !u!1 &1222766615884008000
 GameObject:
   m_ObjectHideFlags: 0
@@ -122,6 +123,7 @@ MonoBehaviour:
   timeBtwShots: 0.5
   projectile: {fileID: 3866281559433675617, guid: 6c643142280f9ea488e3a9b5f10e4b38,
     type: 3}
+  audioData: {fileID: 0}
 --- !u!1 &1222766615923176099
 GameObject:
   m_ObjectHideFlags: 0
@@ -260,7 +262,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 1222766615923176100}
   moveVal: 7
-  coinCount: 0
   crossHair: {fileID: 1222766616120230547}
   weaponHolder: {fileID: 1222766616399484070}
   startTimeBtwShots: 0.25
@@ -397,6 +398,7 @@ Transform:
   m_Children:
   - {fileID: 1222766615895177424}
   - {fileID: 1222766615195768433}
+  - {fileID: 824504526108292372}
   m_Father: {fileID: 1222766615923176102}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -416,3 +418,51 @@ MonoBehaviour:
   prefabs:
   - {fileID: 1222766615895177424}
   - {fileID: 1222766615195768433}
+  - {fileID: 4651064662477790110, guid: bbf815f1aeed9ef49a1fc28ce5adbd51, type: 3}
+--- !u!1 &8589422220557549015
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 824504526108292372}
+  - component: {fileID: 7757455418661441405}
+  m_Layer: 0
+  m_Name: Bris
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &824504526108292372
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8589422220557549015}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1222766616399484071}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7757455418661441405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8589422220557549015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d9cf52502cf4ab4492b403517643bea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeBtwShots: 0.5
+  projectile: {fileID: 7712559431804586646, guid: bc282e389514d164ab0be01d888c01c0,
+    type: 3}
+  audioData: {fileID: 0}

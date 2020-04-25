@@ -6,7 +6,6 @@ public class WeaponScript : MonoBehaviour
 {
     public float timeBtwShots;
     public GameObject projectile;
-    public AudioSource audioData;
 
 
     // Start is called before the first frame update
@@ -21,7 +20,6 @@ public class WeaponScript : MonoBehaviour
 
     public void fireWeapon()
     {
-        audioData.Play();
         Instantiate(projectile, transform.position, transform.rotation);
     }
 }
