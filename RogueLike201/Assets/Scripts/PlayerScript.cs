@@ -10,13 +10,16 @@ public class PlayerScript : MonoBehaviour
     public GameObject crossHair;
     public GameObject weaponHolder;
     public float startTimeBtwShots;
+    private int health;
+    public bool alive;
 
     //private WeaponSwitchScript _switchScript;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        health = 100;
+        alive = true;
     }
 
     // Update is called once per frame
@@ -78,6 +81,21 @@ public class PlayerScript : MonoBehaviour
             //rb.rotation = 270.0f;
             rb.position = new Vector2(rb.position.x + (moveVal * Time.deltaTime), rb.position.y);
             //crossHair.transform.position = new Vector2(crossHair.transform.position.x + (moveVal * Time.deltaTime), crossHair.transform.position.y);
+        }
+    }
+
+    public void takeDamage(int damage)
+    {
+        int newHealth = health - damage;
+
+        if (newHealth < 0)
+        {
+            health = 0;
+            this.alive = false;
+        }
+        else
+        {
+            health = newHealth;
         }
     }
 }

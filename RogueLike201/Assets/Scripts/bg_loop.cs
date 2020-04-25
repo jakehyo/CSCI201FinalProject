@@ -17,7 +17,7 @@ public class bg_loop : MonoBehaviour
         screenBounds = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, mainCamera.transform.position.z));
         loadChild(obj);
 
-        bgPosition = obj.transform.position;
+        bgPosition = new Vector3(-25f, obj.transform.position.y, obj.transform.position.z);
         bgVelocity = new Vector3(-0.01f, 0.0f, 0.0f);
     }
 

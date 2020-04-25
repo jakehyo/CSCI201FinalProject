@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyScript : MonoBehaviour
 {
     public int health;
+    public string enemyName;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,6 +17,7 @@ public class EnemyScript : MonoBehaviour
     {
         if (health <= 0)
         {
+            UpdateKill(enemyName);
             Destroy(gameObject);
         }
     }

@@ -33,7 +33,7 @@ public class BossScript : MonoBehaviour
             Destroy(gameObject);
         }
 
-        if (PlayerScript.alive)
+        if (player.GetComponent<PlayerScript>().alive)
         {
             targ = player.transform.position;
         }

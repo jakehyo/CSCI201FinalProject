@@ -35,7 +35,7 @@ public class EnemyBulletScript : MonoBehaviour
             {
                 //Player take damage
                 Debug.Log("Takin' damage");
-                hitInfo.collider.GetComponent<PlayerScript>().TakeDamage(damage);
+                hitInfo.collider.GetComponent<PlayerScript>().takeDamage(damage);
                 DestroyProjectile();
             }
         }
