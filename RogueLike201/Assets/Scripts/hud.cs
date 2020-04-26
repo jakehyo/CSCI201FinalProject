@@ -6,7 +6,6 @@ using TMPro;
 public class hud : MonoBehaviour
 {
     public Transform username;
-    public Transform money;
     public Transform score;
     public Transform health;
     public Transform weapon;
@@ -19,7 +18,6 @@ public class hud : MonoBehaviour
         Debug.Log(Player);
 
         username.GetComponent<TextMeshProUGUI>().text = Player.GetComponent<PlayerScript>().playerData.username;
-        money.GetComponent<TextMeshProUGUI>().text = "Money: " + Player.GetComponent<PlayerScript>().playerData.money;
         score.GetComponent<TextMeshProUGUI>().text = "Score: " + Player.GetComponent<PlayerScript>().score;
         health.GetComponent<TextMeshProUGUI>().text = "Health: " + Player.GetComponent<PlayerScript>().health;
     }
@@ -27,7 +25,6 @@ public class hud : MonoBehaviour
     void Update()
     {
         username.GetComponent<TextMeshProUGUI>().text = Player.GetComponent<PlayerScript>().playerData.username;
-        money.GetComponent<TextMeshProUGUI>().text = "Money: " + Player.GetComponent<PlayerScript>().playerData.money;
         score.GetComponent<TextMeshProUGUI>().text = "Score: " + Player.GetComponent<PlayerScript>().score;
         health.GetComponent<TextMeshProUGUI>().text = "Health: " + Player.GetComponent<PlayerScript>().health;
     }

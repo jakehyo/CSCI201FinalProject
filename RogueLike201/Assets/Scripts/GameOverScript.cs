@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using TMPro;
 
 public class GameOverScript : MonoBehaviour
 {
@@ -10,6 +10,9 @@ public class GameOverScript : MonoBehaviour
     private float timer = 0.0f;
     private float fiveSec = 5.0f;
     private Transform player;
+    public Animator transition;
+    public float transitionTime;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,11 +27,22 @@ public class GameOverScript : MonoBehaviour
         {
             gameOver.enabled = true;
             timer += Time.deltaTime;
+
             
         }
         if (timer >= fiveSec)
         {
             //use scenechanger to go to main menu
         }
+    }
+
+    IEnumerator loadResults()
+    {
+        transition.SetTrigger("Start");
+
+        yield return new WaitForSeconds(transitionTime);
+
+        SceneManager.LoadScene("Results");
+
     }
 }

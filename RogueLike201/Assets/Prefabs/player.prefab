@@ -372,7 +372,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeBtwShots: 0.25
-  projectile: {fileID: 3866281559433675617, guid: 6c643142280f9ea488e3a9b5f10e4b38,
+  projectile: {fileID: 3866281559433675617, guid: 8fdc055fc903f5343bd81821ff711981,
     type: 3}
 --- !u!82 &5237283934121693605
 AudioSource:
@@ -611,7 +611,9 @@ MonoBehaviour:
   crossHair: {fileID: 5237283932818500602}
   weaponHolder: {fileID: 5237283932545678799}
   startTimeBtwShots: 0.25
+  health: 0
   alive: 0
+  score: 0
 --- !u!1 &6365471109100272346
 GameObject:
   m_ObjectHideFlags: 0
