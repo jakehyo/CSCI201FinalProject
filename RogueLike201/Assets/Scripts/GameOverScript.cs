@@ -27,22 +27,11 @@ public class GameOverScript : MonoBehaviour
         {
             gameOver.enabled = true;
             timer += Time.deltaTime;
-
-            
         }
         if (timer >= fiveSec)
         {
+            SceneManager.LoadScene("Results");
             //use scenechanger to go to main menu
         }
-    }
-
-    IEnumerator loadResults()
-    {
-        transition.SetTrigger("Start");
-
-        yield return new WaitForSeconds(transitionTime);
-
-        SceneManager.LoadScene("Results");
-
     }
 }

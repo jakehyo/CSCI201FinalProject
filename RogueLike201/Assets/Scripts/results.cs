@@ -8,6 +8,9 @@ public class results : MonoBehaviour
     private Transform player;
     public Transform username;
     public Transform score;
+    public Transform time;
+    public Transform accuracy;
+    public Transform final;
     public Transform message;
 
     // Update is called once per frame
@@ -18,7 +21,7 @@ public class results : MonoBehaviour
         // Server contact
 
         username.GetComponent<TextMeshProUGUI>().text = player.GetComponent<PlayerScript>().playerData.username;
-        score.GetComponent<TextMeshProUGUI>().text = "Score: " + player.GetComponent<PlayerScript>().score;
+        score.GetComponent<TextMeshProUGUI>().text = player.GetComponent<PlayerScript>().score.ToString();
 
         if (complete)
         {
