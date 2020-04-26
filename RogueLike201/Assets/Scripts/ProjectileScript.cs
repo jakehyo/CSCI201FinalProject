@@ -27,6 +27,12 @@ public class ProjectileScript : MonoBehaviour
                 hitInfo.collider.GetComponent<EnemyScript>().TakeDamage(damage);
                 DestroyProjectile();
             }
+            if (hitInfo.collider.CompareTag("Boss"))
+            {
+                //Boss take damage
+                hitInfo.collider.GetComponent<BossScript>().TakeDamage(damage);
+                DestroyProjectile();
+            }
         }
         transform.Translate(Vector2.up * speed * Time.deltaTime);
     }

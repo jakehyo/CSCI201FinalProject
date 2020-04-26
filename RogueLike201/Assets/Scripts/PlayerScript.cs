@@ -13,6 +13,7 @@ public class PlayerScript : MonoBehaviour
     public int health;
     public bool alive;
     public int score;
+    public bool bossDefeated;
 
     //private WeaponSwitchScript _switchScript;
 
@@ -22,6 +23,7 @@ public class PlayerScript : MonoBehaviour
         health = 100;
         score = 0;
         alive = true;
+        bossDefeated = false;
     }
 
     // Update is called once per frame
@@ -35,7 +37,7 @@ public class PlayerScript : MonoBehaviour
         if (health <= 0)
         {
             alive = false;
-            Destroy(this.gameObject);
+            //Destroy(this.gameObject);
         }
     }
 
@@ -47,8 +49,11 @@ public class PlayerScript : MonoBehaviour
 
     public void addCoin()
     {
-        playerData.money++;
+        playerData.Money++;
+        score += 100;
     }
+
+    public void addScore(int points)    {        score += points;    }
 
     void updateCrossHair()
     {

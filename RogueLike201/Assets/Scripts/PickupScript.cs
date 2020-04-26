@@ -30,9 +30,6 @@ public class PickupScript : MonoBehaviour
                 GameObject player = GameObject.FindGameObjectWithTag("Player");
                 player.GetComponent<PlayerScript>().addCoin();
 
-                SpriteRenderer spriteRend = GameObject.Find("HUD_Weapon").GetComponent<SpriteRenderer>();
-                spriteRend.sprite = this.GetComponent<SpriteRenderer>().sprite;
-
                 audioData.Play();
                 interacted = true;
                 StartCoroutine(WaitAudio());
@@ -42,6 +39,7 @@ public class PickupScript : MonoBehaviour
                 GameObject player = GameObject.FindGameObjectWithTag("Player");
                 player.GetComponentInChildren<WeaponSwitchScript>().setWeapon(weaponId);
                 interacted = true;
+
                 Object.Destroy(gameObject);
             }
         }

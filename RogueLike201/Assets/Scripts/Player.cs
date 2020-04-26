@@ -5,12 +5,12 @@ using UnityEngine;
 [SerializableAttribute]
 public class Player
 {
-    public int playerID { get; set; }
+    public int PlayerID { get; set; }
     public string username { get; set; }
-    public int highScore { get; set; }
-    public List<int> AllhighScore { get; set; }
-    public bool newGamePlus { get; set; }
-    public List<bool> cosmetic { get; set; }
-    public int weaponID { get; set; }
-    public int money { get; set; }
+    public int HighScore { get; set; }
+    public List<int> AllHighScore { get; set; }
+    public bool NewGamePlus { get; set; }
+    public List<bool> Cosmetic { get; set; }
+    public int WeaponID { get; set; }
+    public int Money { get; set; }
 }

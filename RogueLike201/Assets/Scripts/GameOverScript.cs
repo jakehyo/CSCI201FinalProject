@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class GameOverScript : MonoBehaviour
 {
-    public Text gameOver;
+    //public Text gameOver;
     private float timer = 0.0f;
     private float fiveSec = 5.0f;
     private Transform player;
@@ -16,7 +16,7 @@ public class GameOverScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gameOver.enabled = false;
+        //gameOver.enabled = false;
         player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
@@ -25,13 +25,19 @@ public class GameOverScript : MonoBehaviour
     {
         if (!player.GetComponent<PlayerScript>().alive)
         {
-            gameOver.enabled = true;
-            timer += Time.deltaTime;
-        }
-        if (timer >= fiveSec)
-        {
+            //gameOver.enabled = true;
+            //timer += Time.deltaTime;
             SceneManager.LoadScene("Results");
-            //use scenechanger to go to main menu
+        }
+
+        IEnumerator loadResults()
+        {
+            transition.SetTrigger("Start");
+
+            yield return new WaitForSeconds(transitionTime);
+
+            SceneManager.LoadScene("Results");
+
         }
     }
 }

@@ -141,3 +141,4 @@ MonoBehaviour:
   stationary: 0
   aggroDistance: 5
   shot: {fileID: 3866281559433675617, guid: ac2eefebc5f24134180caf05d0bf6044, type: 3}
+  scorePoints: 300

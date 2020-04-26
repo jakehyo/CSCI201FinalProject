@@ -179,8 +179,9 @@ public class ServerThread extends Thread{
 					pw.flush();
 					break;
 				}
-				if (command.equals("Game Complete")) {
+				if (command.equals("Update")) {
 					line = br.readLine();
+					System.out.println(line);
 					player = gson.fromJson(line, Player.class);
 					String Name = "NAME = '"+player.getNAME()+"',";
 					String HighScore = "HighScore = "+player.getHighScore()+",";
@@ -188,15 +189,20 @@ public class ServerThread extends Thread{
 					String WeaponID = "WeaponID = " + player.getWeaponID()+ ",";
 					String Money = "Money = " + player.getMoney();
 					
-					ps=conn.prepareStatement("UPDATE Player SET "+Name+ HighScore + NewGamePlus + WeaponID + Money + "WHERE PlayerID = "+player_id+ ";");
-					rs= ps.executeQuery();
-					List<Boolean> Cosmos = player.getCosmetic();
-					String White = "WhiteFit = '" + Cosmos.get(0) + "',";
-					String Red = "RedFit = '" + Cosmos.get(1) + "',";
-					String Blue = "BlueFit = '" + Cosmos.get(2) + "',";
-					String Black = "BlackFit = '" + Cosmos.get(3) + "'";
-					ps = conn.prepareStatement("UPDATE Cosmetics SET "+White + Red +Blue +Black+ "WHERE ID = "+ player_id +";");
-					rs = ps.executeQuery();
+					tp = conn.prepareStatement("USE PoppinRobots;");
+					tp.executeQuery();
+					
+					ps=conn.prepareStatement("UPDATE Player SET " + Name + HighScore + NewGamePlus + WeaponID + Money + " WHERE PlayerID = "+player.getPlayerID()+ ";");
+					ps.executeUpdate();
+					
+					System.out.println(HighScore);
+//					List<Boolean> Cosmos = player.getCosmetic();
+//					String White = "WhiteFit = '" + Cosmos.get(0) + "',";
+//					String Red = "RedFit = '" + Cosmos.get(1) + "',";
+//					String Blue = "BlueFit = '" + Cosmos.get(2) + "',";
+//					String Black = "BlackFit = '" + Cosmos.get(3) + "'";
+//					ps = conn.prepareStatement("UPDATE Cosmetics SET WhiteFit = "+White + Red +Blue +Black+ "WHERE ID = "+ player_id +";");
+//					ps.executeUpdate();
 					
 					String response = "Succesfully Saved!";
 					pw.print(response);

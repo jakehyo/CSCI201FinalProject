@@ -2646,6 +2646,7 @@ GameObject:
   - component: {fileID: 1233777390}
   - component: {fileID: 1233777389}
   - component: {fileID: 1233777388}
+  - component: {fileID: 1233777393}
   m_Layer: 5
   m_Name: HighScoreCanvas
   m_TagString: Untagged
@@ -2751,6 +2752,24 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1233777393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1233777387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd942d0bbad0c554296a40a9dc959376, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerObject: {fileID: 5237283934366260170, guid: cd793344cf573f24c97e22cb2f6f5806,
+    type: 3}
+  LI_UserInput: {fileID: 0}
+  SU_UserInput: {fileID: 0}
+  logInErrorText: {fileID: 0}
+  signUpErrorText: {fileID: 0}
 --- !u!1 &1234516894
 GameObject:
   m_ObjectHideFlags: 0
@@ -3606,6 +3625,7 @@ GameObject:
   - component: {fileID: 1423505067}
   - component: {fileID: 1423505066}
   - component: {fileID: 1423505065}
+  - component: {fileID: 1423505069}
   m_Layer: 5
   m_Name: TitleCanvas
   m_TagString: Untagged
@@ -3693,6 +3713,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1423505069
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1423505064}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b78aa2ea8de8fbc468fe0f893e85c689, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1436315615
 GameObject:
   m_ObjectHideFlags: 0

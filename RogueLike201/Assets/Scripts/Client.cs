@@ -20,7 +20,6 @@ public class Client : MonoBehaviour
     public Transform logInErrorText;
     public Transform signUpErrorText;
 
-
     public void Setup()
     {
         int port = 9999;
@@ -102,7 +101,7 @@ public class Client : MonoBehaviour
         // found username
         if (response.Contains("Found"))
         {
-            //logInErrorText.gameObject.SetActive(false);
+            logInErrorText.gameObject.SetActive(false);
             // read in JSON string and deserialize the object
             messageReceived = new byte[1024];
             byteRecv = this.socket.Receive(messageReceived);
@@ -123,7 +122,7 @@ public class Client : MonoBehaviour
         // did not find username
         else if (response.Contains("Absent"))
         {
-            //logInErrorText.gameObject.SetActive(true);
+            logInErrorText.gameObject.SetActive(true);
             // MENU SHOULD PROMPT THE USER TO ENTER ANOTHER USERNAME
             // OR SUGGEST REGISTERING AS A NEW USER
             // OR HAVE THE BACK OPTION
@@ -158,7 +157,7 @@ public class Client : MonoBehaviour
 
         if (response.Contains("Valid"))
         {
-            //signUpErrorText.gameObject.SetActive(false);
+            signUpErrorText.gameObject.SetActive(false);
             //messageReceived = new byte[1024];
             //int byteRecv2 = this.socket.Receive(messageReceived);
             //response = Encoding.ASCII.GetString(messageReceived, 0, byteRecv2);
@@ -180,7 +179,7 @@ public class Client : MonoBehaviour
         else if (response.Contains("Taken"))
         {
             Debug.Log("Username Already Exists");
-            //signUpErrorText.gameObject.SetActive(true);
+            signUpErrorText.gameObject.SetActive(true);
             // MENU SHOULD PROMPT THE USER TO ENTER ANOTHER USERNAME
             // OR PROCEED TO LOGIN MENU
         }
@@ -218,55 +217,26 @@ public class Client : MonoBehaviour
         return retList;
     }
 
-    /*
-    public void updateJSON(int prevScore, bool gameFinished, int weaponID, int money)
+    
+    public void updateUser(Player player)
     {
         // Console.WriteLine("updating user information for user: " + player.username);
         Debug.Log("updating user information for user: " + player.username);
 
         // send command to the server
-        byte[] messageSent = Encoding.ASCII.GetBytes("Login");
+        byte[] messageSent = Encoding.ASCII.GetBytes("Update\n");
         this.socket.Send(messageSent);
 
-        // update high-score if it is the new highest
-        if (prevScore > this.player.AllhighScore[0])
-        {
-            this.player.highScore = prevScore;
-        }
-        // update list of total scores
-        this.player.AllhighScore.Add(prevScore);
-        // sort the list now
-
-        // update new game plus if necessary
-        if (gameFinished)
-        {
-            this.player.newGamePlus = true;
-
-            // update weaponid
-            this.player.weaponID = weaponID;
-
-            // update money (does money get reset if you do not win the game)
-            this.player.money = money;
-        }
-
-        // update cosmetics if applicable
-        if (gameFinished)
-        {
-            System.Collections.IList list = player.cosmetic;
-            for (int i1 = 0; i1 < list.Count; i1++)
-            {
-                int i = (int)list[i1];
-                this.player.cosmetic[i] = true;
-            }
-        }
-
         // serialize the object and send to the server
-        string JSONresult = JsonConvert.SerializeObject(this.player);
+        string JSONresult = JsonConvert.SerializeObject(player) + "\n";
+
+        Debug.Log(JSONresult);
+
         messageSent = Encoding.ASCII.GetBytes(JSONresult);
         this.socket.Send(messageSent);
 
     }
-    */
+    
 
     public void LogInFunction()
     {

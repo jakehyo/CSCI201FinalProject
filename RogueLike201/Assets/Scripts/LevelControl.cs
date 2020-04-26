@@ -30,6 +30,11 @@ public class LevelControl : MonoBehaviour
         SceneManager.LoadScene("room_start"); 
     }
 
+    public void OnMouseClick()
+    {
+        SceneManager.LoadScene(levelName);
+    }
+
     IEnumerator loadLevel()
     {
         transition.SetTrigger("Start");

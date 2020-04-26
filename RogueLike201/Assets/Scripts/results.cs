@@ -5,31 +5,48 @@ using TMPro;
 
 public class results : MonoBehaviour
 {
-    private Transform player;
-    public Transform username;
-    public Transform score;
-    public Transform time;
-    public Transform accuracy;
-    public Transform final;
+    private GameObject player;
+    public Transform usernameTran;
+    public Transform scoreTran;
+    public Transform highScoreTran;
     public Transform message;
 
     // Update is called once per frame
-    void Results(bool complete)
+    void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        player = GameObject.FindGameObjectWithTag("Player");
 
-        // Server contact
+        Player play = player.GetComponent<PlayerScript>().playerData;
 
-        username.GetComponent<TextMeshProUGUI>().text = player.GetComponent<PlayerScript>().playerData.username;
-        score.GetComponent<TextMeshProUGUI>().text = player.GetComponent<PlayerScript>().score.ToString();
+        string username = play.username;
+        int score = player.GetComponent<PlayerScript>().score;
+        int highScore = play.HighScore;
+        bool bossDefeated = player.GetComponent<PlayerScript>().bossDefeated;
 
-        if (complete)
+        Destroy(player);
+
+        if (username != "Guest" && score > highScore)
         {
-            message.GetComponent<TextMeshProUGUI>().text = "Congratulations! Check if your score made it to the High Scores";
+            play.HighScore = score;
+            play.NewGamePlus = bossDefeated;
+            highScore = score;
+
+            Client client = GetComponentInParent<Client>();
+            client.Setup();
+            client.updateUser(play);
+        }
+
+        usernameTran.GetComponent<TextMeshProUGUI>().text = username;
+        scoreTran.GetComponent<TextMeshProUGUI>().text = score.ToString();
+        highScoreTran.GetComponent<TextMeshProUGUI>().text = highScore.ToString();
+
+        if (bossDefeated)
+        {
+            message.GetComponent<TextMeshProUGUI>().text = "Congratulations!";
         }
         else
         {
-            message.GetComponent<TextMeshProUGUI>().text = "Sorry! You lose";
+            message.GetComponent<TextMeshProUGUI>().text = "Game Over";
         }
 
     }

@@ -139,5 +139,6 @@ MonoBehaviour:
   stoppingDistance: 0
   startTimeBtwShots: 2
   stationary: 1
-  aggroDistance: 0
+  aggroDistance: 100
   shot: {fileID: 3866281559433675617, guid: 318f0b94ddc5387418edf32ebec744ff, type: 3}
+  scorePoints: 300
