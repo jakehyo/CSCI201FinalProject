@@ -10,30 +10,26 @@ public class hud : MonoBehaviour
     public Transform score;
     public Transform health;
     public Transform weapon;
-    private int scoreCount;
-    private int healthCount;
     private GameObject Player;
 
     void Awake()
     {
         DontDestroyOnLoad(gameObject);
-        scoreCount = 0;
-        healthCount = 100;
         Player = GameObject.FindGameObjectWithTag("Player");
         Debug.Log(Player);
 
         username.GetComponent<TextMeshProUGUI>().text = Player.GetComponent<PlayerScript>().playerData.username;
         money.GetComponent<TextMeshProUGUI>().text = "Money: " + Player.GetComponent<PlayerScript>().playerData.money;
-        score.GetComponent<TextMeshProUGUI>().text = "Score: " + scoreCount;
-        health.GetComponent<TextMeshProUGUI>().text = "Health: " + healthCount;
+        score.GetComponent<TextMeshProUGUI>().text = "Score: " + Player.GetComponent<PlayerScript>().score;
+        health.GetComponent<TextMeshProUGUI>().text = "Health: " + Player.GetComponent<PlayerScript>().health;
     }
 
     void Update()
     {
         username.GetComponent<TextMeshProUGUI>().text = Player.GetComponent<PlayerScript>().playerData.username;
         money.GetComponent<TextMeshProUGUI>().text = "Money: " + Player.GetComponent<PlayerScript>().playerData.money;
-        score.GetComponent<TextMeshProUGUI>().text = "Score: " + scoreCount;
-        health.GetComponent<TextMeshProUGUI>().text = "Health: " + healthCount;
+        score.GetComponent<TextMeshProUGUI>().text = "Score: " + Player.GetComponent<PlayerScript>().score;
+        health.GetComponent<TextMeshProUGUI>().text = "Health: " + Player.GetComponent<PlayerScript>().health;
     }
 
 }

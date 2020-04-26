@@ -18,7 +18,7 @@ public class bg_loop : MonoBehaviour
         loadChild(obj);
 
         bgPosition = new Vector3(-25f, obj.transform.position.y, obj.transform.position.z);
-        bgVelocity = new Vector3(-0.01f, 0.0f, 0.0f);
+        bgVelocity = new Vector3(-0.001f, 0.0f, 0.0f);
     }
 
     // Update is called once per frame

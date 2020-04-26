@@ -40,11 +40,11 @@ public class EnemyBulletScript : MonoBehaviour
             }
         }
 
-        rb2d.velocity = bulletToPlayer.normalized * speed * Time.deltaTime;
+        rb2d.velocity = bulletToPlayer.normalized * speed * 1000 * Time.deltaTime;
     }
 
     void DestroyProjectile()
     {
-        Destroy(gameObject);
+        Destroy(this.gameObject);
     }
 }

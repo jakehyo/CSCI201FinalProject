@@ -10,8 +10,9 @@ public class PlayerScript : MonoBehaviour
     public GameObject crossHair;
     public GameObject weaponHolder;
     public float startTimeBtwShots;
-    private int health;
+    public int health;
     public bool alive;
+    public int score;
 
     //private WeaponSwitchScript _switchScript;
 
@@ -19,6 +20,7 @@ public class PlayerScript : MonoBehaviour
     void Start()
     {
         health = 100;
+        score = 0;
         alive = true;
     }
 
@@ -30,6 +32,11 @@ public class PlayerScript : MonoBehaviour
 
         movePlayer();
 
+        if (health <= 0)
+        {
+            alive = false;
+            Destroy(this.gameObject);
+        }
     }
 
     void Awake()

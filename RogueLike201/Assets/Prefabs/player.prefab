@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5237283932545678798}
   - component: {fileID: 5237283932545678785}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: WeaponHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -62,7 +62,7 @@ GameObject:
   - component: {fileID: 5237283932818500605}
   - component: {fileID: 5237283932818500604}
   - component: {fileID: 5237283932818500607}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: crossHair
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -78,7 +78,7 @@ Transform:
   m_GameObject: {fileID: 5237283932818500602}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.25}
   m_Children: []
   m_Father: {fileID: 5237283934366260175}
   m_RootOrder: 1
@@ -165,7 +165,7 @@ GameObject:
   - component: {fileID: 5237283934026284824}
   - component: {fileID: 5237283934026284827}
   - component: {fileID: 5237283934026284831}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Rifle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -201,7 +201,6 @@ MonoBehaviour:
   timeBtwShots: 0.5
   projectile: {fileID: 8574991088433991020, guid: 23d3ad7d36dcc61458a01f94ad7fda97,
     type: 3}
-  audioData: {fileID: 5237283934026284831}
 --- !u!82 &5237283934026284831
 AudioSource:
   m_ObjectHideFlags: 0
@@ -307,7 +306,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5237283934109524776}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: shotPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -339,7 +338,7 @@ GameObject:
   - component: {fileID: 5237283934121693625}
   - component: {fileID: 5237283934121693624}
   - component: {fileID: 5237283934121693605}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: PeaShooter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -375,7 +374,6 @@ MonoBehaviour:
   timeBtwShots: 0.25
   projectile: {fileID: 3866281559433675617, guid: 6c643142280f9ea488e3a9b5f10e4b38,
     type: 3}
-  audioData: {fileID: 5237283934121693605}
 --- !u!82 &5237283934121693605
 AudioSource:
   m_ObjectHideFlags: 0
@@ -485,7 +483,7 @@ GameObject:
   - component: {fileID: 5237283934366260173}
   - component: {fileID: 5237283934366260174}
   - component: {fileID: 5237283934366260161}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -501,7 +499,7 @@ Transform:
   m_GameObject: {fileID: 5237283934366260170}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 8.05, y: -0.35, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_Children:
   - {fileID: 5237283934109524776}
   - {fileID: 5237283932818500605}
@@ -593,9 +591,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.009681582, y: 0}
+  m_Offset: {x: 0.033445995, y: -0.08640274}
   serializedVersion: 2
-  m_Radius: 1.1154133
+  m_Radius: 0.4007567
 --- !u!114 &5237283934366260161
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -609,12 +607,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 5237283934366260173}
-  playerData: {fileID: 0}
   moveVal: 7
-  coinCount: 0
   crossHair: {fileID: 5237283932818500602}
   weaponHolder: {fileID: 5237283932545678799}
   startTimeBtwShots: 0.25
+  alive: 0
 --- !u!1 &6365471109100272346
 GameObject:
   m_ObjectHideFlags: 0
@@ -626,7 +623,7 @@ GameObject:
   - component: {fileID: 6365471109100272345}
   - component: {fileID: 6365471109100272344}
   - component: {fileID: 6365471109100272351}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Weapon3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -662,7 +659,6 @@ MonoBehaviour:
   timeBtwShots: 0.25
   projectile: {fileID: 7712559431804586646, guid: bc282e389514d164ab0be01d888c01c0,
     type: 3}
-  audioData: {fileID: 6365471109100272351}
 --- !u!82 &6365471109100272351
 AudioSource:
   m_ObjectHideFlags: 0
