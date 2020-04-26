@@ -192,7 +192,7 @@ public class ServerThread extends Thread{
 					tp = conn.prepareStatement("USE PoppinRobots;");
 					tp.executeQuery();
 					
-					ps=conn.prepareStatement("UPDATE Player SET " + Name + HighScore + NewGamePlus + WeaponID + Money + " WHERE PlayerID = "+player.getPlayerID()+ ";");
+					ps=conn.prepareStatement("UPDATE Player SET " + Name + HighScore + NewGamePlus + WeaponID + Money + " WHERE NAME = '" + player.getNAME() + "';");
 					ps.executeUpdate();
 					
 					System.out.println(HighScore);

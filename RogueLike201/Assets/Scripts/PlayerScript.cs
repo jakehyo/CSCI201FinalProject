@@ -39,6 +39,11 @@ public class PlayerScript : MonoBehaviour
             alive = false;
             //Destroy(this.gameObject);
         }
+
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
     }
 
     void Awake()
